@@ -90,6 +90,7 @@ section { display: flex; flex-direction: column; gap: 10px; }
 .board .seat:focus-visible .chair { stroke: var(--accent); stroke-width: 3; }
 .board .lbl { font-family: var(--f-body); font-size: 12px; font-weight: 600; fill: var(--ink); }
 .board .lbl.now { fill: var(--accent); }
+.board .look { display: flex; gap: 6px; justify-content: center; padding-top: 6px; }
 .board .role { font-family: var(--f-body); font-size: 10px; fill: var(--muted); }
 .board .cnt { font-family: var(--f-mono); font-size: 11px; font-weight: 500; fill: #fff; }
 .board .plate { font-family: var(--f-display); font-size: 13px; fill: var(--table-edge); letter-spacing: .08em; opacity: .9; }
@@ -567,6 +568,43 @@ footer .row { display: flex; gap: 8px; flex-wrap: wrap; }
     }
     sv("circle", { cx: p.x, cy: p.y, r: R, fill: "none", stroke: color, "stroke-width": 2 }, g);
   }
+  // Второй вид: медальоны с эмблемами. Платон — додекаэдр (платоново тело), Аристотель — раскрытая книга,
+  // Архимед — шар в цилиндре (чертёж с его надгробия), Вергилий — лавровый венок, Данте — звезда («…и вышли вновь узреть светила»).
+  function emblem(g, p, who, color, now) {
+    const R = 21, GOLD = "#d9b45f", INK = "#1b2740";
+    if (now) sv("circle", { cx: p.x, cy: p.y, r: R + 5, fill: "none", stroke: "var(--accent)", "stroke-width": 2.5, class: "ring" }, g);
+    const a = sv("g", { transform: `translate(${p.x} ${p.y})` }, g);
+    sv("circle", { cx: 0, cy: 0, r: R, fill: INK, stroke: color, "stroke-width": 2.5 }, a);
+    sv("circle", { cx: 0, cy: 0, r: R - 4, fill: "none", stroke: GOLD, "stroke-width": .7, opacity: .7 }, a);
+    const ic = sv("g", { fill: "none", stroke: GOLD, "stroke-width": 1.3, "stroke-linejoin": "round", "stroke-linecap": "round" }, a);
+    const poly = (r, rot, n) => Array.from({ length: n }, (_, k) => { const t = rot + k * 2 * Math.PI / n; return [r * Math.cos(t), r * Math.sin(t)]; });
+    const pts = (arr) => arr.map((q) => q[0].toFixed(2) + "," + q[1].toFixed(2)).join(" ");
+    if (who === "Платон") {
+      const o = poly(11, -Math.PI / 2, 5), m = poly(7.6, -Math.PI / 2, 5), i = poly(4.6, Math.PI / 2, 5);
+      sv("polygon", { points: pts(o) }, ic); sv("polygon", { points: pts(i) }, ic);
+      o.forEach((q, k) => sv("line", { x1: q[0], y1: q[1], x2: m[k][0], y2: m[k][1] }, ic));
+      m.forEach((q, k) => { const a1 = i[(k + 2) % 5], a2 = i[(k + 3) % 5]; sv("polyline", { points: pts([a1, q, a2]) }, ic); });
+    } else if (who === "Аристотель") {
+      sv("path", { d: "M0 -6 Q-6 -9 -11 -7 L-11 8 Q-6 6 0 9 Q6 6 11 8 L11 -7 Q6 -9 0 -6 Z M0 -6 L0 9" }, ic);
+      [-2, 1.5, 5].forEach((y) => { sv("line", { x1: -8, y1: y - 2, x2: -3, y2: y - 1 }, ic); sv("line", { x1: 3, y1: y - 1, x2: 8, y2: y - 2 }, ic); });
+    } else if (who === "Архимед") {
+      sv("rect", { x: -8.5, y: -9, width: 17, height: 18 }, ic);
+      sv("circle", { cx: 0, cy: 0, r: 8.5 }, ic);
+      sv("ellipse", { cx: 0, cy: 0, rx: 8.5, ry: 2.6, opacity: .6 }, ic);
+    } else if (who === "Вергилий") {
+      [-1, 1].forEach((sd) => {
+        sv("path", { d: `M${sd * 2} 10 Q${sd * 12} 6 ${sd * 9} -9` }, ic);
+        [[8, 6], [10.5, 1], [10.5, -4], [8.5, -8.5]].forEach(([x, y], k) =>
+          sv("ellipse", { cx: sd * x, cy: y, rx: 3, ry: 1.4, fill: GOLD, stroke: "none", transform: `rotate(${sd * (-60 + k * 25)} ${sd * x} ${y})` }, ic));
+      });
+    } else if (who === "Данте") {
+      const st = []; for (let k = 0; k < 16; k++) { const r = k % 2 ? 4 : 11.5, t = -Math.PI / 2 + k * Math.PI / 8; st.push([r * Math.cos(t), r * Math.sin(t)]); }
+      sv("polygon", { points: pts(st), fill: GOLD, "fill-opacity": .25 }, ic);
+    }
+  }
+  const LOOK = "academia.look";
+  let look = store.get(LOOK) || "emblem";
+
   function renderBoard() {
     const box = $("board"); box.textContent = "";
     const svg = sv("svg", { viewBox: "0 0 360 268", role: "img", "aria-label": "Стол заседаний: у кого лежат письма без ответа" }, box);
@@ -578,6 +616,13 @@ footer .row { display: flex; gap: 8px; flex-wrap: wrap; }
     sv("rect", { x: 60, y: 74, width: 240, height: 114, rx: 10, fill: "url(#wood)", stroke: "var(--table-edge)", "stroke-width": 3, filter: "url(#sh)" }, svg);
     sv("rect", { x: 70, y: 84, width: 220, height: 94, rx: 6, fill: "none", stroke: "var(--table-edge)", "stroke-width": 1, opacity: .45 }, svg);
     const plate = sv("text", { x: 180, y: 136, "text-anchor": "middle", class: "plate" }, svg); plate.textContent = "АКАДЕМИЯ";
+    const sw = h("div", "look"); sw.setAttribute("role", "group"); sw.setAttribute("aria-label", "Вид фигур за столом");
+    [["emblem", "Эмблемы"], ["portrait", "Портреты"]].forEach(([k, txt]) => {
+      const b = h("button", "chip-btn", txt); b.type = "button"; b.setAttribute("aria-pressed", look === k ? "true" : "false");
+      b.addEventListener("click", () => { look = k; store.set(LOOK, k); renderBoard(); });
+      sw.appendChild(b);
+    });
+    box.appendChild(sw);
     const t = A.turn;
     const label = (g, p, name, role, now) => {
       const pos = { top: [p.x, 10], bottom: [p.x, 250], left: [p.x, 162], right: [p.x - 6, 162] }[p.dir];
@@ -587,11 +632,11 @@ footer .row { display: flex; gap: 8px; flex-wrap: wrap; }
     // Митя
     const mine = !!(t && t.byMitya), mp = SEATS["Митя"];
     const mg = sv("g", { "aria-label": "Митя" + (mine ? ", сейчас ход за тобой" : "") }, svg);
-    avatar(mg, mp, "Данте", "var(--c-mit)", mine); label(mg, mp, "Данте", "Митя", mine);
+    (look === "emblem" ? emblem : avatar)(mg, mp, "Данте", "var(--c-mit)", mine); label(mg, mp, "Данте", "Митя", mine);
     ROLES.forEach((r) => {
       const p = SEATS[r], arr = A.pending[r], now = t && t.role === r;
       const g = sv("g", { class: "seat", tabindex: 0, role: "button", "aria-label": TITLE[r] + (arr.length ? ", ждут: " + arr.map((L) => L.num).join(", ") : ", ничего не ждёт") }, svg);
-      avatar(g, p, PERSONA[r], col(r), now); label(g, p, PERSONA[r], r, now);
+      (look === "emblem" ? emblem : avatar)(g, p, PERSONA[r], col(r), now); label(g, p, PERSONA[r], r, now);
       // письма на столе перед креслом
       const st = { top: [p.x - 14, 90], bottom: [p.x - 14, 146], left: [74, 118], right: [256, 118] }[p.dir];
       const n = Math.min(arr.length, 4);
