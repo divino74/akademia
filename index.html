@@ -90,6 +90,7 @@ section { display: flex; flex-direction: column; gap: 10px; }
 .board .seat:focus-visible .chair { stroke: var(--accent); stroke-width: 3; }
 .board .lbl { font-family: var(--f-body); font-size: 12px; font-weight: 600; fill: var(--ink); }
 .board .lbl.now { fill: var(--accent); }
+.board .role { font-family: var(--f-body); font-size: 10px; fill: var(--muted); }
 .board .cnt { font-family: var(--f-mono); font-size: 11px; font-weight: 500; fill: #fff; }
 .board .plate { font-family: var(--f-display); font-size: 13px; fill: var(--table-edge); letter-spacing: .08em; opacity: .9; }
 .board .ring { animation: ring 2.4s ease-in-out infinite; }
@@ -522,26 +523,53 @@ footer .row { display: flex; gap: 8px; flex-wrap: wrap; }
   // Стол заседаний: Митя внизу, собеседник по правую руку от него, исполнитель напротив,
   // наставник и рецензент — друг против друга по торцам. Письма лежат на столе перед адресатом.
   const SEATS = {
-    "исполнитель": { x: 180, y: 54,  dir: "top" },
-    "Митя":        { x: 138, y: 208, dir: "bottom" },
-    "собеседник":  { x: 222, y: 208, dir: "bottom" },
-    "наставник":   { x: 36,  y: 131, dir: "left" },
-    "рецензент":   { x: 324, y: 131, dir: "right" }
+    "исполнитель": { x: 180, y: 50,  dir: "top" },
+    "Митя":        { x: 138, y: 214, dir: "bottom" },
+    "собеседник":  { x: 222, y: 214, dir: "bottom" },
+    "наставник":   { x: 34,  y: 124, dir: "left" },
+    "рецензент":   { x: 324, y: 124, dir: "right" }
   };
   function goTo(r) { filter = { kind: "to", who: r }; shown = PAGE; renderFilters(); renderLetters(); $("pisma").scrollIntoView({ behavior: "smooth" }); }
-  function chair(g, p, color, now) {
-    const v = p.dir === "left" || p.dir === "right";
-    if (now) sv("rect", v ? { x: p.x - 22, y: p.y - 32, width: 44, height: 64, rx: 14 } : { x: p.x - 32, y: p.y - 22, width: 64, height: 44, rx: 14 },
-      g).setAttribute("style", "fill:none;stroke:var(--accent);stroke-width:2.5"), g.lastChild.setAttribute("class", "ring");
-    const back = { top: { x: p.x - 24, y: p.y - 16, width: 48, height: 8 }, bottom: { x: p.x - 24, y: p.y + 8, width: 48, height: 8 },
-      left: { x: p.x - 16, y: p.y - 24, width: 8, height: 48 }, right: { x: p.x + 8, y: p.y - 24, width: 8, height: 48 } }[p.dir];
-    sv("rect", Object.assign({ rx: 4, fill: color }, back), g);
-    sv("rect", Object.assign({ class: "chair", rx: 6, fill: "var(--chair)", stroke: color, "stroke-width": 1.5 },
-      v ? { x: p.x - 10, y: p.y - 20, width: 20, height: 40 } : { x: p.x - 20, y: p.y - 10, width: 40, height: 20 }), g);
+  // Аватары: Митя — Данте, собеседник — Вергилий (проводник), наставник — Платон (основатель Академии),
+  // рецензент — Аристотель («Платон мне друг, но истина дороже»), исполнитель — Архимед (инженер, «дайте точку опоры»).
+  const PERSONA = { "Митя": "Данте", "собеседник": "Вергилий", "наставник": "Платон", "рецензент": "Аристотель", "исполнитель": "Архимед" };
+  let clipN = 0;
+  function avatar(g, p, who, color, now) {
+    const R = 21, id = "av" + (clipN++);
+    if (now) sv("circle", { cx: p.x, cy: p.y, r: R + 5, fill: "none", stroke: "var(--accent)", "stroke-width": 2.5, class: "ring" }, g);
+    const cp = sv("clipPath", { id }, g); sv("circle", { cx: 0, cy: 0, r: R }, cp);
+    const a = sv("g", { "clip-path": `url(#${id})` }, sv("g", { transform: `translate(${p.x} ${p.y})` }, g));
+    sv("circle", { cx: 0, cy: 0, r: R, fill: color, opacity: .28 }, a);
+    const SKIN = "#e7c6a2", GREY = "#b8b2aa", DARK = "#4a3a2e", LAUREL = "#4f7a3a";
+    const robe = { "Данте": "#9b2a22", "Вергилий": "#f1ede4", "Платон": "#d9cfbf", "Аристотель": "#5c6f8a", "Архимед": "#c8a15a" }[who];
+    sv("path", { d: "M-17 24 Q-15 7 0 6 Q15 7 17 24Z", fill: robe }, a);                 // плечи, тога
+    if (who === "Вергилий" || who === "Платон") sv("path", { d: "M-9 7 L4 24 L8 24 L-3 7Z", fill: "rgba(0,0,0,.12)" }, a); // складка тоги
+    sv("rect", { x: -3.5, y: 0, width: 7, height: 7, fill: SKIN }, a);                       // шея
+    sv("circle", { cx: 0, cy: -5, r: 8.5, fill: SKIN }, a);                                 // голова
+    if (who === "Платон") {
+      sv("path", { d: "M-8.5 -6 Q-9 -15 0 -14.5 Q9 -15 8.5 -6 Q6 -11 0 -11 Q-6 -11 -8.5 -6Z", fill: GREY }, a);
+      sv("path", { d: "M-8 -3 Q-9 12 0 14 Q9 12 8 -3 Q5 2 0 2 Q-5 2 -8 -3Z", fill: GREY }, a); // длинная борода
+    } else if (who === "Аристотель") {
+      sv("path", { d: "M-8.5 -6 Q-9 -15 0 -14.5 Q9 -15 8.5 -6 Q6 -10 0 -10 Q-6 -10 -8.5 -6Z", fill: DARK }, a);
+      sv("path", { d: "M-7.5 -2 Q-7 7 0 8 Q7 7 7.5 -2 Q4 2 0 2 Q-4 2 -7.5 -2Z", fill: DARK }, a);   // короткая борода
+      sv("rect", { x: 7, y: 12, width: 9, height: 6, rx: 3, fill: "#efe6d2", stroke: "#a8946a", "stroke-width": .8 }, a); // свиток
+    } else if (who === "Архимед") {
+      sv("path", { d: "M-8.5 -7 Q-6 -14 0 -14 Q6 -14 8.5 -7 Q5 -10 0 -10 Q-5 -10 -8.5 -7Z", fill: GREY }, a);
+      sv("path", { d: "M-8 -3 Q-8 9 0 10 Q8 9 8 -3 Q4 1 0 1 Q-4 1 -8 -3Z", fill: GREY }, a);
+      const c = sv("g", { stroke: "#2a2a2a", "stroke-width": 1.3, "stroke-linecap": "round", fill: "none" }, a);   // циркуль
+      sv("path", { d: "M11 9 L8 21 M11 9 L15 21" }, c); sv("circle", { cx: 11, cy: 8.5, r: 1.2, fill: "#2a2a2a" }, c);
+    } else if (who === "Вергилий") {
+      sv("path", { d: "M-8.5 -6 Q-8 -14 0 -14 Q8 -14 8.5 -6 Q5 -10 0 -10 Q-5 -10 -8.5 -6Z", fill: "#7a5a3a" }, a);
+      [-7, -4, -1, 2, 5].forEach((x, k) => sv("ellipse", { cx: x + 1, cy: -12 + Math.abs(k - 2) * 1.2, rx: 2.4, ry: 1.3, fill: LAUREL, transform: `rotate(${(k - 2) * 18} ${x + 1} -12)` }, a)); // лавры
+    } else if (who === "Данте") {
+      sv("path", { d: "M-10.5 3 Q-12 -17 0 -16 Q12 -17 10.5 3 L7.5 3 Q8 -10 0 -10 Q-8 -10 -7.5 3Z", fill: "#9b2a22" }, a); // красный капюшон
+      [-6, -3, 0, 3, 6].forEach((x, k) => sv("ellipse", { cx: x, cy: -12 + Math.abs(k - 2) * 1, rx: 2.2, ry: 1.2, fill: LAUREL, transform: `rotate(${(k - 2) * 20} ${x} -12)` }, a));
+    }
+    sv("circle", { cx: p.x, cy: p.y, r: R, fill: "none", stroke: color, "stroke-width": 2 }, g);
   }
   function renderBoard() {
     const box = $("board"); box.textContent = "";
-    const svg = sv("svg", { viewBox: "0 0 360 250", role: "img", "aria-label": "Стол заседаний: у кого лежат письма без ответа" }, box);
+    const svg = sv("svg", { viewBox: "0 0 360 268", role: "img", "aria-label": "Стол заседаний: у кого лежат письма без ответа" }, box);
     const defs = sv("defs", {}, svg);
     const g1 = sv("linearGradient", { id: "wood", x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
     sv("stop", { offset: 0, "stop-color": "var(--table-top)" }, g1); sv("stop", { offset: 1, "stop-color": "var(--table)" }, g1);
@@ -551,18 +579,19 @@ footer .row { display: flex; gap: 8px; flex-wrap: wrap; }
     sv("rect", { x: 70, y: 84, width: 220, height: 94, rx: 6, fill: "none", stroke: "var(--table-edge)", "stroke-width": 1, opacity: .45 }, svg);
     const plate = sv("text", { x: 180, y: 136, "text-anchor": "middle", class: "plate" }, svg); plate.textContent = "АКАДЕМИЯ";
     const t = A.turn;
-    const label = (g, p, text, now) => {
-      const pos = { top: [p.x, 22], bottom: [p.x, 244], left: [p.x, 178], right: [p.x, 178] }[p.dir];
-      const l = sv("text", { x: pos[0], y: pos[1], "text-anchor": "middle", class: "lbl" + (now ? " now" : "") }, g); l.textContent = text;
+    const label = (g, p, name, role, now) => {
+      const pos = { top: [p.x, 10], bottom: [p.x, 250], left: [p.x, 162], right: [p.x - 6, 162] }[p.dir];
+      const l = sv("text", { x: pos[0], y: pos[1], "text-anchor": "middle", class: "lbl" + (now ? " now" : "") }, g); l.textContent = name;
+      const r = sv("text", { x: pos[0], y: pos[1] + 12, "text-anchor": "middle", class: "role" }, g); r.textContent = role;
     };
     // Митя
     const mine = !!(t && t.byMitya), mp = SEATS["Митя"];
     const mg = sv("g", { "aria-label": "Митя" + (mine ? ", сейчас ход за тобой" : "") }, svg);
-    chair(mg, mp, "var(--c-mit)", mine); label(mg, mp, "Митя", mine);
+    avatar(mg, mp, "Данте", "var(--c-mit)", mine); label(mg, mp, "Данте", "Митя", mine);
     ROLES.forEach((r) => {
       const p = SEATS[r], arr = A.pending[r], now = t && t.role === r;
       const g = sv("g", { class: "seat", tabindex: 0, role: "button", "aria-label": TITLE[r] + (arr.length ? ", ждут: " + arr.map((L) => L.num).join(", ") : ", ничего не ждёт") }, svg);
-      chair(g, p, col(r), now); label(g, p, TITLE[r], now);
+      avatar(g, p, PERSONA[r], col(r), now); label(g, p, PERSONA[r], r, now);
       // письма на столе перед креслом
       const st = { top: [p.x - 14, 90], bottom: [p.x - 14, 146], left: [74, 118], right: [256, 118] }[p.dir];
       const n = Math.min(arr.length, 4);
@@ -578,7 +607,7 @@ footer .row { display: flex; gap: 8px; flex-wrap: wrap; }
         sv("circle", { cx: bx, cy: by, r: 10, fill: now ? "var(--accent)" : col(r) }, g);
         const c = sv("text", { x: bx, y: by + 4, "text-anchor": "middle", class: "cnt" }, g); c.textContent = arr.length;
       }
-      const hit = { top: [p.x - 44, 6, 88, 120], bottom: [p.x - 40, 140, 80, 110], left: [0, 80, 110, 104], right: [250, 80, 110, 104] }[p.dir];
+      const hit = { top: [p.x - 44, 0, 88, 126], bottom: [p.x - 40, 140, 80, 128], left: [0, 80, 110, 104], right: [250, 80, 110, 104] }[p.dir];
       sv("rect", { x: hit[0], y: hit[1], width: hit[2], height: hit[3], fill: "transparent" }, g);
       g.addEventListener("click", () => goTo(r));
       g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goTo(r); } });
