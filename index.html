@@ -519,13 +519,26 @@ footer .row { display: flex; gap: 8px; flex-wrap: wrap; }
   const SVGNS = "http://www.w3.org/2000/svg";
   const sv = (tag, attrs, parent) => { const n = document.createElementNS(SVGNS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
   // Стол заседаний: по двое с каждой длинной стороны; письма лежат на столе перед адресатом
+  // Стол заседаний: Митя внизу, собеседник по правую руку от него, исполнитель напротив,
+  // наставник и рецензент — друг против друга по торцам. Письма лежат на столе перед адресатом.
   const SEATS = {
-    "наставник":   { x: 128, y: 56,  side: -1 },
-    "рецензент":   { x: 232, y: 56,  side: -1 },
-    "исполнитель": { x: 128, y: 206, side: 1 },
-    "собеседник":  { x: 232, y: 206, side: 1 }
+    "исполнитель": { x: 180, y: 54,  dir: "top" },
+    "Митя":        { x: 138, y: 208, dir: "bottom" },
+    "собеседник":  { x: 222, y: 208, dir: "bottom" },
+    "наставник":   { x: 36,  y: 131, dir: "left" },
+    "рецензент":   { x: 324, y: 131, dir: "right" }
   };
   function goTo(r) { filter = { kind: "to", who: r }; shown = PAGE; renderFilters(); renderLetters(); $("pisma").scrollIntoView({ behavior: "smooth" }); }
+  function chair(g, p, color, now) {
+    const v = p.dir === "left" || p.dir === "right";
+    if (now) sv("rect", v ? { x: p.x - 22, y: p.y - 32, width: 44, height: 64, rx: 14 } : { x: p.x - 32, y: p.y - 22, width: 64, height: 44, rx: 14 },
+      g).setAttribute("style", "fill:none;stroke:var(--accent);stroke-width:2.5"), g.lastChild.setAttribute("class", "ring");
+    const back = { top: { x: p.x - 24, y: p.y - 16, width: 48, height: 8 }, bottom: { x: p.x - 24, y: p.y + 8, width: 48, height: 8 },
+      left: { x: p.x - 16, y: p.y - 24, width: 8, height: 48 }, right: { x: p.x + 8, y: p.y - 24, width: 8, height: 48 } }[p.dir];
+    sv("rect", Object.assign({ rx: 4, fill: color }, back), g);
+    sv("rect", Object.assign({ class: "chair", rx: 6, fill: "var(--chair)", stroke: color, "stroke-width": 1.5 },
+      v ? { x: p.x - 10, y: p.y - 20, width: 20, height: 40 } : { x: p.x - 20, y: p.y - 10, width: 40, height: 20 }), g);
+  }
   function renderBoard() {
     const box = $("board"); box.textContent = "";
     const svg = sv("svg", { viewBox: "0 0 360 250", role: "img", "aria-label": "Стол заседаний: у кого лежат письма без ответа" }, box);
@@ -534,44 +547,39 @@ footer .row { display: flex; gap: 8px; flex-wrap: wrap; }
     sv("stop", { offset: 0, "stop-color": "var(--table-top)" }, g1); sv("stop", { offset: 1, "stop-color": "var(--table)" }, g1);
     const sh = sv("filter", { id: "sh", x: "-10%", y: "-10%", width: "120%", height: "140%" }, defs);
     sv("feDropShadow", { dx: 0, dy: 4, stdDeviation: 4, "flood-opacity": .18 }, sh);
-    // стол
-    sv("rect", { x: 46, y: 74, width: 268, height: 114, rx: 10, fill: "url(#wood)", stroke: "var(--table-edge)", "stroke-width": 3, filter: "url(#sh)" }, svg);
-    sv("rect", { x: 56, y: 84, width: 248, height: 94, rx: 6, fill: "none", stroke: "var(--table-edge)", "stroke-width": 1, opacity: .45 }, svg);
+    sv("rect", { x: 60, y: 74, width: 240, height: 114, rx: 10, fill: "url(#wood)", stroke: "var(--table-edge)", "stroke-width": 3, filter: "url(#sh)" }, svg);
+    sv("rect", { x: 70, y: 84, width: 220, height: 94, rx: 6, fill: "none", stroke: "var(--table-edge)", "stroke-width": 1, opacity: .45 }, svg);
     const plate = sv("text", { x: 180, y: 136, "text-anchor": "middle", class: "plate" }, svg); plate.textContent = "АКАДЕМИЯ";
     const t = A.turn;
-    const mine = !!(t && t.byMitya);
-    const head = sv("g", { "aria-label": "Митя — во главе стола" + (mine ? ", сейчас ход за тобой" : "") }, svg);
-    if (mine) sv("rect", { x: 6, y: 103, width: 40, height: 56, rx: 12, fill: "none", stroke: "var(--accent)", "stroke-width": 2.5, class: "ring" }, head);
-    sv("rect", { x: 10, y: 107, width: 8, height: 48, rx: 4, fill: "var(--c-mit)" }, head);
-    sv("rect", { x: 18, y: 111, width: 22, height: 40, rx: 6, fill: "var(--chair)", stroke: "var(--c-mit)", "stroke-width": 1.5 }, head);
-    const ml = sv("text", { x: 26, y: 176, "text-anchor": "middle", class: "lbl" + (mine ? " now" : "") }, head); ml.textContent = "Митя";
-    sv("rect", { x: 322, y: 111, width: 22, height: 40, rx: 6, fill: "var(--chair)", stroke: "var(--line)", "stroke-width": 1.5 }, svg);
-    sv("rect", { x: 344, y: 107, width: 8, height: 48, rx: 4, fill: "var(--line)" }, svg);
+    const label = (g, p, text, now) => {
+      const pos = { top: [p.x, 22], bottom: [p.x, 244], left: [p.x, 178], right: [p.x, 178] }[p.dir];
+      const l = sv("text", { x: pos[0], y: pos[1], "text-anchor": "middle", class: "lbl" + (now ? " now" : "") }, g); l.textContent = text;
+    };
+    // Митя
+    const mine = !!(t && t.byMitya), mp = SEATS["Митя"];
+    const mg = sv("g", { "aria-label": "Митя" + (mine ? ", сейчас ход за тобой" : "") }, svg);
+    chair(mg, mp, "var(--c-mit)", mine); label(mg, mp, "Митя", mine);
     ROLES.forEach((r) => {
       const p = SEATS[r], arr = A.pending[r], now = t && t.role === r;
       const g = sv("g", { class: "seat", tabindex: 0, role: "button", "aria-label": TITLE[r] + (arr.length ? ", ждут: " + arr.map((L) => L.num).join(", ") : ", ничего не ждёт") }, svg);
-      // кресло: спинка снаружи, сиденье к столу
-      const cy = p.y, back = p.side < 0 ? cy - 16 : cy + 8;
-      if (now) sv("rect", { x: p.x - 32, y: cy - 22, width: 64, height: 44, rx: 14, fill: "none", stroke: "var(--accent)", "stroke-width": 2.5, class: "ring" }, g);
-      sv("rect", { x: p.x - 24, y: back, width: 48, height: 8, rx: 4, fill: col(r) }, g);
-      sv("rect", { class: "chair", x: p.x - 20, y: cy - 10, width: 40, height: 20, rx: 6, fill: "var(--chair)", stroke: col(r), "stroke-width": 1.5 }, g);
-      const lbl = sv("text", { x: p.x, y: p.side < 0 ? 26 : 242, "text-anchor": "middle", class: "lbl" + (now ? " now" : "") }, g);
-      lbl.textContent = TITLE[r];
+      chair(g, p, col(r), now); label(g, p, TITLE[r], now);
       // письма на столе перед креслом
-      const sy = p.side < 0 ? 92 : 146;
+      const st = { top: [p.x - 14, 90], bottom: [p.x - 14, 146], left: [74, 118], right: [256, 118] }[p.dir];
+      const n = Math.min(arr.length, 4);
       arr.slice(-4).forEach((L, i) => {
-        const x = p.x - 10 + i * 5 - Math.min(arr.length, 4) * 2, y = sy + (p.side < 0 ? i * 2 : -i * 2);
+        const x = st[0] + i * 5, y = st[1] + (p.dir === "bottom" ? -i * 2 : i * 2);
         const d = sv("g", { transform: `rotate(${(i % 2 ? 5 : -4)} ${x + 9} ${y + 12})` }, g);
         sv("rect", { x, y, width: 18, height: 24, rx: 2, fill: "var(--paper)", stroke: "rgba(0,0,0,.25)", "stroke-width": .6 }, d);
         sv("rect", { x, y, width: 18, height: 4, rx: 1, fill: col(L.from) }, d);
         [9, 13, 17].forEach((ly) => sv("line", { x1: x + 3, y1: y + ly, x2: x + 15, y2: y + ly, stroke: "rgba(0,0,0,.18)", "stroke-width": 1 }, d));
       });
       if (arr.length) {
-        const bx = p.x + 26, by = p.side < 0 ? sy + 4 : sy + 20;
+        const bx = p.dir === "right" ? st[0] - 8 : st[0] + 18 + n * 5 + 6, by = st[1] + (p.dir === "bottom" ? 22 : 2);
         sv("circle", { cx: bx, cy: by, r: 10, fill: now ? "var(--accent)" : col(r) }, g);
         const c = sv("text", { x: bx, y: by + 4, "text-anchor": "middle", class: "cnt" }, g); c.textContent = arr.length;
       }
-      sv("rect", { x: p.x - 44, y: p.side < 0 ? 10 : 140, width: 88, height: 110, fill: "transparent" }, g);
+      const hit = { top: [p.x - 44, 6, 88, 120], bottom: [p.x - 40, 140, 80, 110], left: [0, 80, 110, 104], right: [250, 80, 110, 104] }[p.dir];
+      sv("rect", { x: hit[0], y: hit[1], width: hit[2], height: hit[3], fill: "transparent" }, g);
       g.addEventListener("click", () => goTo(r));
       g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goTo(r); } });
     });
