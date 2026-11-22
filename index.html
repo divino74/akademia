@@ -6,287 +6,261 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
 <title>Академия diffiety</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
-body { margin: 0; }
-[hidden] { display: none !important; }
-/* Layout: one narrow column — кабинет вечером: окно с горами, стол сверху, затем письма, лестница, полки. Одна тёмная «вечерняя» гамма намеренно. */
+/* Академия: спокойная панель стола. Крупно — чей ход, ниже — кому что лежит, мелко — история. */
 :root {
-  --night: #12171e;      /* стены кабинета */
-  --wall: #1b222c;       /* панели */
-  --wall-2: #232c38;
-  --wood: #6b4a33;       /* стол */
-  --wood-dark: #4a3324;
-  --lamp: #f0b54a;       /* свет лампы = чей ход */
-  --paper: #ece4d2;      /* письма */
-  --ink: #d6dbe0;        /* текст */
-  --muted: #8f9aa6;
-  --moss: #86a98f;       /* пройдено */
-  /* у каждого учёного свой цвет: письмо несёт цвет отправителя и адресата */
-  --c-nas: #b9a2ec; --c-isp: #5fbdb3; --c-rec: #ec8f7c; --c-sob: #86b4ee;
-  --sky-1: #2b3d57; --sky-2: #c9835a; --hill-1: #384a5c; --hill-2: #26323f; --hill-3: #19222c;
-  --f-display: "Alegreya", "PT Serif", Georgia, serif;
-  --f-body: "IBM Plex Sans", "Segoe UI", Roboto, sans-serif;
+  --bg: #f6f3ed; --surface: #ffffff; --surface-2: #efebe3; --line: #e1dbcf;
+  --ink: #1f2328; --ink-2: #4a5058; --muted: #7a808a;
+  --accent: #2f5bd3; --accent-soft: #e6edfc; --ok: #3f7d56; --ok-soft: #e4f1e8; --warn: #a35a14; --warn-soft: #fcefe0;
+  --c-nas: #7b5cc4; --c-isp: #1f8a80; --c-rec: #c8563f; --c-sob: #3f77c4; --c-mit: #b7791f; --table: #5e4634; --table-top: #77583f; --table-edge: #3f2e22; --chair: #e9e5dd; --paper: #ffffff; --c-ext: #6b7280;
+  --hero-1: #16213a; --hero-2: #22345a; --hero-ink: #f5f1e8; --hero-muted: #c9cfda;
+  --shadow: 0 1px 2px rgba(20, 24, 32, .06), 0 4px 16px rgba(20, 24, 32, .06);
+  --f-display: "Alegreya", Georgia, serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", Roboto, system-ui, sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12161d; --surface: #1a2029; --surface-2: #222a35; --line: #2c3542;
+    --ink: #e6e9ee; --ink-2: #bcc3cd; --muted: #8b95a3;
+    --accent: #8eaeff; --accent-soft: #1f2a44; --ok: #7fbf93; --ok-soft: #1d3326; --warn: #f0a35e; --warn-soft: #3a2a1a;
+    --c-nas: #b9a2ec; --c-isp: #5fbdb3; --c-rec: #ec8f7c; --c-sob: #86b4ee; --c-mit: #f0b54a; --c-ext: #9aa3af; --table: #3f3127; --table-top: #4f3d30; --table-edge: #2a2019; --chair: #2a3340; --paper: #e8e4dc;
+    --hero-1: #18233b; --hero-2: #24365a; --hero-ink: #f5f1e8; --hero-muted: #aab3c0;
+    --shadow: none;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12161d; --surface: #1a2029; --surface-2: #222a35; --line: #2c3542;
+  --ink: #e6e9ee; --ink-2: #bcc3cd; --muted: #8b95a3;
+  --accent: #8eaeff; --accent-soft: #1f2a44; --ok: #7fbf93; --ok-soft: #1d3326; --warn: #f0a35e; --warn-soft: #3a2a1a;
+  --c-nas: #b9a2ec; --c-isp: #5fbdb3; --c-rec: #ec8f7c; --c-sob: #86b4ee; --c-mit: #f0b54a; --c-ext: #9aa3af; --table: #3f3127; --table-top: #4f3d30; --table-edge: #2a2019; --chair: #2a3340; --paper: #e8e4dc;
+  --hero-1: #18233b; --hero-2: #24365a; --hero-ink: #f5f1e8; --hero-muted: #aab3c0;
+  --shadow: none;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
-body { background: var(--night); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5; }
-.wrap { max-width: 560px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 48px; display: flex; flex-direction: column; gap: 28px; }
-h1, h2 { font-family: var(--f-display); font-weight: 700; margin: 0; text-wrap: balance; }
-h1 { font-size: 2.4rem; line-height: 1; letter-spacing: .01em; }
-h2 { font-size: 1.45rem; }
-.eyebrow { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-header { display: flex; flex-direction: column; gap: 6px; }
-.epigraph { border-left: 2px solid var(--lamp); padding: 4px 0 4px 14px; display: flex; flex-direction: column; gap: 4px; }
-.epigraph q { font-family: var(--f-display); font-style: italic; font-size: 1.3rem; line-height: 1.3; quotes: none; color: var(--paper); }
-.epigraph .ru { color: var(--ink); }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.5; }
+.wrap { max-width: 640px; margin: 0 auto; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) calc(40px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); display: flex; flex-direction: column; gap: 22px; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+h1 { font-family: var(--f-display); font-size: 1.9rem; line-height: 1; font-weight: 700; }
+h2 { font-size: 1.05rem; font-weight: 600; }
+.eyebrow { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.small { font-size: .85rem; color: var(--muted); }
+button { font: inherit; color: inherit; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.top .titles { display: flex; flex-direction: column; gap: 4px; }
+.iconbtn { min-width: 44px; min-height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; display: grid; place-items: center; color: var(--ink-2); }
+.iconbtn:focus-visible, .btn:focus-visible, .letter:focus-visible, .tile:focus-visible, .chip-btn:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.iconbtn svg { width: 20px; height: 20px; }
+
+/* Главное: чей ход */
+.hero { border-radius: 16px; padding: 20px 18px 18px; background: linear-gradient(160deg, var(--hero-1), var(--hero-2)); color: var(--hero-ink); display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden; }
+.hero .hills { position: absolute; inset: auto 0 0 0; height: 46px; opacity: .22; pointer-events: none; }
+.hero .label { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--hero-muted); }
+.hero .who { font-family: var(--f-display); font-size: 2rem; line-height: 1.1; font-weight: 700; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.hero .who .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--pc); box-shadow: 0 0 0 4px color-mix(in srgb, var(--pc) 30%, transparent); flex: none; }
+.hero .what { font-size: 1.08rem; line-height: 1.45; }
+.hero .nums { font-family: var(--f-mono); font-size: .95rem; background: rgba(255,255,255,.1); border-radius: 8px; padding: 2px 8px; white-space: nowrap; }
+.hero .note { font-size: .88rem; color: var(--hero-muted); }
+.hero .row { display: flex; gap: 8px; flex-wrap: wrap; position: relative; }
+.hero .btn { background: var(--hero-ink); color: #1f2328; }
+.hero .btn.ghost { background: transparent; color: var(--hero-ink); border-color: rgba(255,255,255,.35); }
+.copied { font-size: .85rem; }
+.hero .copied { color: var(--hero-muted); position: relative; }
+textarea.fallback { width: 100%; font: inherit; font-size: .88rem; border-radius: 8px; padding: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); margin-top: 6px; }
+
+.btn { min-height: 44px; padding: 10px 16px; border-radius: 12px; border: 1px solid transparent; background: var(--ink); color: var(--bg); font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn:active, .tile:active, .letter:active { transform: scale(.98); }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px; }
+section { display: flex; flex-direction: column; gap: 10px; }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+
+/* Стол заседаний */
+.board { padding: 10px 8px 6px; }
+.board svg { display: block; width: 100%; height: auto; }
+.board .seat { cursor: pointer; }
+.board .seat:focus-visible .chair { stroke: var(--accent); stroke-width: 3; }
+.board .lbl { font-family: var(--f-body); font-size: 12px; font-weight: 600; fill: var(--ink); }
+.board .lbl.now { fill: var(--accent); }
+.board .look { display: flex; gap: 6px; justify-content: center; padding-top: 6px; }
+.board .role { font-family: var(--f-body); font-size: 10px; fill: var(--muted); }
+.board .cnt { font-family: var(--f-mono); font-size: 11px; font-weight: 500; fill: #fff; }
+.board .plate { font-family: var(--f-display); font-size: 13px; fill: var(--table-edge); letter-spacing: .08em; opacity: .9; }
+.board .ring { animation: ring 2.4s ease-in-out infinite; }
+@keyframes ring { 0%,100% { opacity: .35 } 50% { opacity: .9 } }
+/* Кому что лежит */
+.tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.tile { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px; cursor: pointer; display: flex; flex-direction: column; gap: 4px; min-height: 72px; position: relative; box-shadow: var(--shadow); border-top: 4px solid var(--pc); }
+.tile .name { font-weight: 600; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.tile .count { font-family: var(--f-mono); font-size: 1.5rem; line-height: 1; color: var(--pc); }
+.tile .count.zero { color: var(--muted); font-size: 1rem; }
+.tile .sub { font-size: .82rem; color: var(--ink-2); }
+.tile.now { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.who-pill { display: inline-flex; align-items: center; gap: 5px; font-size: .85rem; font-weight: 600; color: var(--pc); white-space: nowrap; }
+.who-pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--pc); }
+.arrow { color: var(--muted); margin: 0 4px; }
+
+.notes { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.notes li { font-size: .9rem; padding: 8px 10px; border-radius: 10px; background: var(--warn-soft); color: var(--ink); }
+.notes li b { font-family: var(--f-mono); font-weight: 500; }
+details > summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 40px; }
+details > summary::-webkit-details-marker { display: none; }
+details > summary::after { content: "▾"; color: var(--muted); transition: transform .2s; }
+details[open] > summary::after { transform: rotate(180deg); }
+
+/* Последние шаги */
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.steps li { display: grid; grid-template-columns: 16px 1fr; gap: 10px; }
+.steps .rail { position: relative; }
+.steps .rail::before { content: ""; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: var(--line); }
+.steps li:first-child .rail::before { top: 14px; }
+.steps li:last-child .rail::before { bottom: calc(100% - 14px); }
+.steps .rail::after { content: ""; position: absolute; left: 3px; top: 10px; width: 10px; height: 10px; border-radius: 50%; background: var(--from); box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--to); }
+.steps button { text-align: left; background: none; border: none; padding: 6px 0 12px; cursor: pointer; display: flex; flex-direction: column; gap: 2px; width: 100%; }
+.meta { display: flex; align-items: center; flex-wrap: wrap; gap: 2px; font-size: .8rem; }
+.meta .no { font-family: var(--f-mono); color: var(--muted); margin-left: 6px; font-size: .78rem; }
+.say { font-size: .95rem; line-height: 1.45; }
+.say.fallback { color: var(--ink-2); }
+
+/* Письма */
+.filters { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+.chip-btn { flex: none; min-height: 38px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: .88rem; }
+.chip-btn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip-btn .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pc); }
+.chip-btn .n { font-family: var(--f-mono); font-size: .75rem; opacity: .8; }
+.letters { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.letter { width: 100%; text-align: left; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--from); border-radius: 12px; padding: 10px 12px; cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
+.letter .head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.letter .route { display: flex; align-items: center; flex-wrap: wrap; min-width: 0; }
+.letter .num { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); flex: none; }
+.letter .gist { font-size: .92rem; color: var(--ink-2); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge { font-size: .74rem; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); }
+.badge.wait { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.badge.ok { background: var(--ok-soft); color: var(--ok); }
+.badge.warn { background: var(--warn-soft); color: var(--warn); }
+.more { align-self: center; }
+.empty { color: var(--muted); font-size: .9rem; padding: 6px 0; }
+
+/* Лестница и полки */
+.ladder { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column-reverse; }
+.rung { display: grid; grid-template-columns: 48px 1fr; gap: 12px; padding: 8px 0; position: relative; }
+.rung::before { content: ""; position: absolute; left: 23px; top: 0; bottom: 0; width: 2px; background: var(--line); }
+.rung .mark { position: relative; z-index: 1; height: 28px; border-radius: 8px; display: grid; place-items: center; font-family: var(--f-mono); font-size: .78rem; background: var(--surface-2); color: var(--muted); }
+.rung.done .mark { background: var(--ok); color: var(--surface); }
+.rung.now .mark { background: var(--accent); color: var(--surface); }
+.rung .name { font-weight: 600; font-size: .95rem; }
+.rung .plain { font-size: .88rem; color: var(--ink-2); }
+.rung .when { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); }
+.shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.book { background: var(--surface-2); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 3px; border-left: 4px solid var(--pc, var(--line)); }
+.book .t { font-family: var(--f-display); font-weight: 700; font-size: 1.02rem; line-height: 1.25; }
+.book .n { font-size: .86rem; }
+.book .w { font-family: var(--f-mono); font-size: .7rem; color: var(--muted); }
+.epigraph { border-left: 3px solid var(--accent); padding: 2px 0 2px 12px; display: flex; flex-direction: column; gap: 2px; }
+.epigraph q { font-family: var(--f-display); font-style: italic; font-size: 1.15rem; quotes: none; }
 .epigraph small { color: var(--muted); font-size: .78rem; }
 
-.scene { background: var(--wall); border-radius: 14px; overflow: hidden; }
-.scene svg { display: block; width: 100%; height: auto; }
-.seat { cursor: pointer; }
-.seat:focus-visible .head { stroke: var(--lamp); stroke-width: 3; }
-.seat text { font-family: var(--f-body); fill: var(--ink); font-size: 13px; font-weight: 600; }
-.seat .cnt { font-family: var(--f-mono); font-size: 11px; fill: var(--night); font-weight: 500; }
-.turn { padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--wall-2); }
-.turn b { color: var(--lamp); font-weight: 600; }
-.turn .who { font-size: .82rem; color: var(--muted); }
-
-section { display: flex; flex-direction: column; gap: 12px; }
-.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--night); margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding: 8px max(16px, env(safe-area-inset-left, 0px)); display: flex; gap: 6px; overflow-x: auto; border-bottom: 1px solid var(--wall-2); }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--night); }
-.tabs a { flex: none; color: var(--ink); text-decoration: none; font-size: .9rem; padding: 8px 12px; border-radius: 999px; background: var(--wall); min-height: 40px; display: inline-flex; align-items: center; }
-.tabs a:focus-visible { outline: 2px solid var(--lamp); }
-section, .scene { scroll-margin-top: 64px; }
-.who-pill { display: inline-flex; align-items: center; gap: 5px; font-size: .82rem; font-weight: 600; color: var(--pc); white-space: nowrap; }
-.who-pill::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--pc); }
-.arrow { color: var(--muted); margin: 0 4px; }
-.filters { display: flex; flex-wrap: wrap; gap: 6px; }
-.filters button { font: inherit; font-size: .85rem; color: var(--ink); background: var(--wall); border: 1.5px solid var(--wall-2); border-radius: 999px; padding: 6px 12px; min-height: 38px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
-.filters button[aria-pressed="true"] { border-color: var(--pc, var(--lamp)); background: color-mix(in srgb, var(--pc, var(--lamp)) 18%, var(--wall)); }
-.filters button .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--pc); }
-.filters .n { font-family: var(--f-mono); font-size: .75rem; color: var(--lamp); }
-.letters { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.letter { width: 100%; min-height: 64px; text-align: left; font: inherit; color: inherit; background: var(--wall); border: 1px solid var(--wall-2); border-left: 6px solid var(--from); border-radius: 6px 10px 10px 6px; padding: 10px 12px 10px 10px; display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; cursor: pointer; position: relative; overflow: hidden; }
-.letter::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 6px; background: var(--to); }
-.letter:hover { border-color: var(--muted); border-left-color: var(--from); }
-.letter:focus-visible { outline: 2px solid var(--lamp); outline-offset: 2px; }
-.letter .route { display: flex; align-items: center; flex-wrap: wrap; min-width: 0; }
-.letter .num { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); align-self: start; padding-right: 6px; }
-.letter .gist { grid-column: 1 / -1; min-width: 0; padding-right: 6px; }
-.letter.new .num { color: var(--lamp); }
-.letter.new .num::before { content: "● "; }
-.chron { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
-.chron .day { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 12px 0 6px; }
-.chron .entry { display: grid; grid-template-columns: 14px 1fr; gap: 10px; padding: 0; }
-.chron .rail { position: relative; }
-.chron .rail::before { content: ""; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--wall-2); }
-.chron .rail::after { content: ""; position: absolute; left: 2px; top: 14px; width: 10px; height: 10px; border-radius: 50%; background: var(--from); box-shadow: 0 0 0 2px var(--night), 0 0 0 4px var(--to); }
-.chron button { font: inherit; color: inherit; text-align: left; background: none; border: none; padding: 8px 0 12px; cursor: pointer; display: flex; flex-direction: column; gap: 3px; min-height: 48px; width: 100%; }
-.chron button:focus-visible { outline: 2px solid var(--lamp); outline-offset: 2px; border-radius: 6px; }
-.chron .meta { display: flex; align-items: center; flex-wrap: wrap; gap: 2px; font-size: .8rem; }
-.chron .meta .no { font-family: var(--f-mono); color: var(--muted); margin-left: 8px; font-size: .75rem; }
-.chron .say { font-size: 1rem; line-height: 1.45; }
-.chron .say.fallback { color: var(--muted); }
-.chron .hint { font-size: .78rem; color: var(--muted); padding-top: 4px; }
-.empty { color: var(--muted); font-size: .9rem; padding: 8px 0; }
-.chip { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; padding: 1px 6px; border-radius: 4px; margin-left: 6px; }
-.chip.new { background: var(--lamp); color: var(--night); }
-
-.ladder { list-style: none; margin: 0; padding: 0; position: relative; display: flex; flex-direction: column-reverse; gap: 0; }
-.rung { display: grid; grid-template-columns: 52px 1fr; gap: 12px; padding: 10px 0; position: relative; }
-.rung::before { content: ""; position: absolute; left: 25px; top: 0; bottom: 0; width: 2px; background: var(--wall-2); }
-.rung .mark { position: relative; z-index: 1; width: 52px; height: 30px; border-radius: 6px; display: grid; place-items: center; font-family: var(--f-mono); font-size: .78rem; background: var(--wall); border: 1px solid var(--wall-2); color: var(--muted); }
-.rung.done .mark { background: var(--moss); border-color: var(--moss); color: var(--night); font-weight: 500; }
-.rung.now .mark { background: transparent; border: 2px solid var(--lamp); color: var(--lamp); box-shadow: 0 0 14px color-mix(in srgb, var(--lamp) 45%, transparent); }
-.rung .body { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.rung .name { font-weight: 600; }
-.rung .plain { font-size: .88rem; color: var(--ink); opacity: .85; }
-.rung .when { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); }
-.ml { background: var(--wall); border-radius: 10px; padding: 10px 12px; font-size: .88rem; }
-.ml b { font-weight: 600; }
-
-.shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-.card { background: var(--wall); border-radius: 4px 10px 10px 4px; border-left: 6px solid var(--wood); padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.card.find { border-left-color: var(--lamp); }
-.card .t { font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; line-height: 1.25; }
-.card .n { font-size: .85rem; }
-.card .w { font-family: var(--f-mono); font-size: .7rem; color: var(--muted); }
-
-dialog { border: none; padding: 0; background: transparent; width: min(560px, 100%); max-width: 100%; margin: auto auto 0; }
-dialog::backdrop { background: rgba(5, 8, 12, .6); }
-.sheet { background: var(--paper); color: #2a241c; border-radius: 16px 16px 0 0; padding: 20px max(18px, env(safe-area-inset-left, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 10px; max-height: 80vh; overflow-y: auto; }
-.sheet .route { font-family: var(--f-mono); font-size: .78rem; color: #6c5f4c; }
-.sheet .pair { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; font-size: .95rem; }
-.sheet .tag { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: var(--pc); color: #1b1712; font-weight: 600; font-size: .85rem; }
-.sheet .actions button { min-height: 44px; }
-.sheet h3 { font-family: var(--f-display); font-size: 1.3rem; margin: 0; line-height: 1.25; }
-.sheet .ask { background: #f6eedb; border-left: 3px solid #b98a2e; padding: 8px 10px; }
-.sheet .lead { font-size: .92rem; }
+/* Карточка письма */
+dialog { border: none; padding: 0; background: transparent; width: min(640px, 100%); max-width: 100%; margin: auto auto 0; color: var(--ink); }
+dialog::backdrop { background: rgba(10, 12, 16, .5); }
+.sheet { background: var(--surface); border-radius: 20px 20px 0 0; padding: 18px max(18px, env(safe-area-inset-left, 0px)) calc(22px + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 12px; max-height: 85vh; overflow-y: auto; }
+dialog[open] .sheet { animation: rise .25s cubic-bezier(.2,.9,.3,1); }
+@keyframes rise { from { transform: translateY(30px); opacity: .5 } to { transform: none; opacity: 1 } }
+.sheet .route { font-family: var(--f-mono); font-size: .78rem; color: var(--muted); }
+.sheet h3 { font-family: var(--f-display); font-size: 1.3rem; line-height: 1.25; }
+.sheet .lead { font-size: .93rem; color: var(--ink-2); margin: 0; }
+.sheet .ask { background: var(--accent-soft); border-radius: 10px; padding: 8px 10px; font-size: .92rem; }
+.sheet .status { background: var(--surface-2); border-radius: 10px; padding: 10px 12px; font-size: .88rem; display: flex; flex-direction: column; gap: 4px; }
 .sheet .actions { display: flex; flex-wrap: wrap; gap: 8px; }
-.sheet .actions button.alt { background: transparent; color: #2a241c; border: 1.5px solid #2a241c; }
-.sheet .copied { font-size: .82rem; color: #6c5f4c; }
-.sheet textarea { width: 100%; font: inherit; font-size: .88rem; background: #f6eedb; color: #2a241c; border: 1px solid #b98a2e; border-radius: 6px; padding: 6px 8px; }
-.sheet button { align-self: flex-start; font: inherit; font-weight: 600; background: #2a241c; color: var(--paper); border: none; border-radius: 8px; padding: 8px 16px; cursor: pointer; }
-footer { font-size: .78rem; color: var(--muted); }
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
-/* ——— живой кабинет ——— */
-#room .stars circle { fill: var(--paper); animation: twinkle 4s ease-in-out infinite; }
-#room .halo { animation: halo 6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
-#room .clouds ellipse { fill: var(--paper); opacity: .14; animation: drift 38s linear infinite; }
-#room .clouds ellipse:nth-child(2) { animation-duration: 52s; animation-delay: -20s; }
-#room .layer { transition: transform .2s linear; }
-#room .pool { animation: flicker 5s ease-in-out infinite; transition: opacity .6s ease; }
-#room .bulb { transition: fill .4s ease; }
-#room .motes circle { fill: var(--paper); opacity: 0; animation: mote 7s ease-in-out infinite; transition: opacity .6s; }
-#room.dark .pool { opacity: 0; animation: none; }
-#room.dark .bulb { fill: var(--wall-2); }
-#room.dark .motes circle { animation: none; opacity: 0; }
-#room .desklamp { cursor: pointer; transform-box: fill-box; transform-origin: center bottom; }
-#room .desklamp:focus-visible path { stroke: var(--lamp); stroke-width: 2; }
-#room .fig { transform-box: fill-box; transform-origin: center bottom; animation: breathe 4.5s ease-in-out infinite; }
-#room .fig.busy .headg { transform-box: fill-box; transform-origin: center bottom; animation: nod 2.6s ease-in-out infinite; }
-#room .pen { transform-box: fill-box; transform-origin: left bottom; animation: write .9s ease-in-out infinite alternate; }
-#room .seatlamp.on { animation: flicker 3.2s ease-in-out infinite; }
-#room .hop { animation: hop .45s cubic-bezier(.3,1.6,.5,1) !important; }
-#room .spark { animation: spark .7s ease-out forwards; }
-@keyframes twinkle { 0%,100% { opacity: .25 } 50% { opacity: 1 } }
-@keyframes halo { 0%,100% { transform: scale(1); opacity: .12 } 50% { transform: scale(1.35); opacity: .2 } }
-@keyframes drift { from { transform: translateX(-80px) } to { transform: translateX(200px) } }
-@keyframes flicker { 0%,100% { opacity: 1 } 45% { opacity: .86 } 50% { opacity: .95 } 70% { opacity: .9 } }
-@keyframes mote { 0% { opacity: 0; transform: translate(0,0) } 30% { opacity: .55 } 100% { opacity: 0; transform: translate(10px,-26px) } }
-@keyframes breathe { 0%,100% { transform: scaleY(1) } 50% { transform: scaleY(1.025) } }
-@keyframes nod { 0%,70%,100% { transform: rotate(0) } 80% { transform: rotate(-9deg) } 90% { transform: rotate(5deg) } }
-@keyframes write { from { transform: rotate(-8deg) translateX(-1px) } to { transform: rotate(6deg) translateX(1px) } }
-@keyframes hop { 0% { transform: translateY(0) } 40% { transform: translateY(-9px) scale(1.06) } 100% { transform: translateY(0) } }
-@keyframes spark { from { opacity: .9; r: 2 } to { opacity: 0; r: .2 } }
-.letter, .filters button, .tabs a, .chron button, #door button, .sheet button, .card { transition: transform .12s ease, border-color .2s ease, background-color .2s ease; }
-.letter:active, .filters button:active, .tabs a:active, .sheet button:active, #door button:active { transform: scale(.97); }
-.tabs a.on { background: var(--lamp); color: var(--night); }
-.card:hover { transform: translateY(-2px); }
-dialog[open] .sheet { animation: rise .28s cubic-bezier(.2,.9,.3,1); }
-dialog[open]::backdrop { animation: fade .28s ease; }
-@keyframes rise { from { transform: translateY(40px); opacity: .4 } to { transform: none; opacity: 1 } }
-@keyframes fade { from { opacity: 0 } to { opacity: 1 } }
-.rung.now .mark::after { content: ""; position: absolute; inset: -6px; border-radius: 10px; border: 2px solid var(--lamp); opacity: 0; animation: ping 2.4s ease-out infinite; }
-@keyframes ping { 0% { opacity: .6; transform: scale(.9) } 100% { opacity: 0; transform: scale(1.25) } }
-html.calm *, html.calm *::before, html.calm *::after { animation: none !important; transition: none !important; }
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-#door { background: var(--wall); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+.tag { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 999px; background: color-mix(in srgb, var(--pc) 16%, transparent); color: var(--pc); font-weight: 600; font-size: .85rem; }
+
+#door { display: flex; flex-direction: column; gap: 10px; }
 #door p { margin: 0; }
-#door label { font-size: .85rem; color: var(--muted); }
-#door input { font: inherit; font-family: var(--f-mono); font-size: .9rem; width: 100%; padding: 10px 12px; border-radius: 8px; border: 1.5px solid var(--wall-2); background: var(--night); color: var(--ink); min-height: 44px; }
-#door input:focus-visible { outline: 2px solid var(--lamp); }
-#door button, .forget { font: inherit; font-weight: 600; min-height: 44px; padding: 8px 18px; border-radius: 8px; border: none; background: var(--lamp); color: var(--night); cursor: pointer; align-self: flex-start; }
-#door .err { color: var(--c-rec); font-size: .88rem; }
-.forget { background: transparent; color: var(--muted); border: 1px solid var(--wall-2); font-weight: 500; font-size: .8rem; min-height: 36px; margin-top: 8px; }
+#door input { font: inherit; font-family: var(--f-mono); font-size: .9rem; width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); min-height: 44px; }
+#door .err { color: var(--c-rec); font-size: .9rem; }
+footer { font-size: .8rem; color: var(--muted); display: flex; flex-direction: column; gap: 8px; }
+footer .row { display: flex; gap: 8px; flex-wrap: wrap; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+@media (min-width: 560px) { .tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); } h1 { font-size: 2.2rem; } }
 </style>
 </head>
 <body>
-
 <div class="wrap">
-  <header>
-    <span class="eyebrow">diffiety · стол проекта</span>
-    <h1>Академия</h1>
-  </header>
-
-  <form id="door" hidden>
-    <p>Кабинет заперт. Это закрытый стол проекта: страница читает его прямо из репозитория по твоему ключу.</p>
-    <label for="key">Ключ GitHub (только чтение)</label>
-    <input id="key" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…">
-    <button type="submit">Войти</button>
-    <p class="err" id="door-err" hidden></p>
-    <p style="font-size:.8rem;color:var(--muted)">Ключ хранится только в этом браузере на этом телефоне и уходит только на api.github.com.</p>
-  </form>
-
-  <main id="main" hidden style="display:flex;flex-direction:column;gap:28px">
-  <div class="epigraph" id="epigraph"></div>
-
-  <nav class="tabs" aria-label="Разделы">
-    <a href="#stol">Стол</a><a href="#pisma">Письма</a><a href="#letopis">Летопись</a><a href="#lestnica">Лестница</a><a href="#polki">Полки</a>
-  </nav>
-
-  <div class="scene" id="stol">
-    <svg id="room" viewBox="0 0 360 470" role="img" aria-label="Кабинет: четверо за столом, у кого горит лампа — того ход">
-      <defs>
-        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="var(--sky-1)"/><stop offset="1" stop-color="var(--sky-2)"/>
-        </linearGradient>
-        <radialGradient id="glow"><stop offset="0" stop-color="var(--lamp)" stop-opacity=".55"/><stop offset="1" stop-color="var(--lamp)" stop-opacity="0"/></radialGradient>
-        <radialGradient id="pool"><stop offset="0" stop-color="var(--lamp)" stop-opacity=".32"/><stop offset=".55" stop-color="var(--lamp)" stop-opacity=".08"/><stop offset="1" stop-color="var(--lamp)" stop-opacity="0"/></radialGradient>
-        <radialGradient id="tabletop" cx=".45" cy=".4"><stop offset="0" stop-color="var(--wood)"/><stop offset="1" stop-color="var(--wood-dark)"/></radialGradient>
-      </defs>
-      <!-- полки слева и справа -->
-      <g id="shelves"></g>
-      <!-- окно: Апеннины над Лиццано -->
-      <clipPath id="pane"><rect x="90" y="18" width="180" height="120" rx="4"/></clipPath>
-      <g>
-        <g clip-path="url(#pane)">
-        <rect x="90" y="18" width="180" height="120" rx="4" fill="url(#sky)"/>
-        <g class="stars"><circle cx="110" cy="30" r="1" /><circle cx="150" cy="26" r=".8" style="animation-delay:-1.2s"/><circle cx="205" cy="34" r="1" style="animation-delay:-2.1s"/><circle cx="258" cy="28" r=".8" style="animation-delay:-.6s"/><circle cx="128" cy="44" r=".7" style="animation-delay:-3s"/><circle cx="190" cy="24" r=".7" style="animation-delay:-1.8s"/></g>
-        <circle cx="236" cy="50" r="10" fill="var(--paper)" opacity=".12" class="halo"/>
-        <circle cx="236" cy="50" r="6" fill="var(--paper)" opacity=".9"/>
-        <g class="clouds"><ellipse cx="120" cy="58" rx="22" ry="4" /><ellipse cx="210" cy="64" rx="28" ry="4.5" /></g>
-        <g class="layer" data-depth="0.06"><path d="M90 104 L120 82 L142 94 L170 66 L196 88 L222 72 L250 92 L270 84 L270 138 L90 138Z" fill="var(--hill-1)"/></g>
-        <g class="layer" data-depth="0.12"><path d="M90 118 L112 106 L140 116 L168 100 L200 114 L232 102 L270 116 L270 138 L90 138Z" fill="var(--hill-2)"/></g>
-        <g class="layer" data-depth="0.2"><path d="M90 130 L130 122 L180 128 L230 120 L270 128 L270 138 L90 138Z" fill="var(--hill-3)"/></g>
-        </g>
-        <rect x="90" y="18" width="180" height="120" rx="4" fill="none" stroke="var(--wood-dark)" stroke-width="6"/>
-        <line x1="180" y1="18" x2="180" y2="138" stroke="var(--wood-dark)" stroke-width="4"/>
-        <line x1="90" y1="72" x2="270" y2="72" stroke="var(--wood-dark)" stroke-width="3"/>
-      </g>
-      <!-- стол -->
-      <ellipse cx="180" cy="300" rx="112" ry="84" fill="url(#tabletop)"/>
-      <ellipse cx="180" cy="300" rx="112" ry="84" fill="none" stroke="var(--wood-dark)" stroke-width="3"/>
-      <ellipse cx="180" cy="300" rx="150" ry="112" fill="url(#pool)" class="pool"/>
-      <g class="motes"><circle cx="160" cy="270" r="1.2"/><circle cx="196" cy="282" r="1" style="animation-delay:-2s"/><circle cx="174" cy="318" r="1.3" style="animation-delay:-4s"/><circle cx="210" cy="306" r=".9" style="animation-delay:-1s"/><circle cx="150" cy="300" r="1" style="animation-delay:-3s"/></g>
-      <g class="desklamp" id="desklamp" tabindex="0" role="button" aria-label="Лампа: включить или выключить свет">
-        <ellipse cx="180" cy="306" rx="16" ry="7" fill="var(--wood-dark)"/>
-        <rect x="178" y="280" width="4" height="26" fill="var(--muted)"/>
-        <path d="M164 286 L196 286 L188 268 L172 268Z" fill="#2f5a43" stroke="#1e3a2b" stroke-width="1"/>
-        <ellipse cx="180" cy="287" rx="9" ry="2.5" fill="var(--lamp)" class="bulb"/>
-      </g>
-      <g id="stacks"></g>
-      <g id="seats"></g>
-      <g id="flight"></g>
-    </svg>
-    <div class="turn" id="turn"></div>
+  <div class="top">
+    <div class="titles"><span class="eyebrow">diffiety · стол проекта</span><h1>Академия</h1></div>
+    <button class="iconbtn" id="theme" type="button" aria-label="Тема: светлая или тёмная">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
   </div>
 
-  <section id="pisma">
-    <div class="sec-head"><h2>Письма</h2><span class="eyebrow">левая полоса — от кого, правая — кому</span></div>
-    <div class="filters" id="filters" role="group" aria-label="Показать письма"></div>
-    <ul class="letters" id="letters"></ul>
-  </section>
+  <form id="door" class="card" hidden>
+    <p>Кабинет заперт. Это закрытый стол проекта: страница читает его прямо из репозитория по твоему ключу.</p>
+    <label for="key" class="small">Ключ GitHub (только чтение)</label>
+    <input id="key" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…">
+    <button class="btn" type="submit">Войти</button>
+    <p class="err" id="door-err" hidden></p>
+    <p class="small">Ключ хранится только в этом браузере и уходит только на api.github.com.</p>
+  </form>
 
-  <section id="letopis">
-    <div class="sec-head"><h2>Летопись</h2><span class="eyebrow">история стола по-простому</span></div>
-    <ol class="chron" id="chron"></ol>
-  </section>
+  <main id="main" hidden style="display:flex;flex-direction:column;gap:22px">
+    <div class="hero" id="hero" aria-live="polite"></div>
 
-  <section id="lestnica">
-    <div class="sec-head"><h2>Лестница движка</h2><span class="eyebrow">снизу вверх</span></div>
-    <ol class="ladder" id="ladder"></ol>
-    <div class="ml" id="ml"></div>
-  </section>
+    <section>
+      <div class="sec-head"><h2>Стол</h2><span class="eyebrow">у кого лежат письма без ответа</span></div>
+      <div class="card board" id="board"></div>
+      <div class="tiles" id="tiles"></div>
+      <p class="small" id="tiles-hint"></p>
+    </section>
 
-  <section id="polki">
-    <div class="sec-head"><h2>Полка находок отца</h2></div>
-    <div class="shelf" id="finds"></div>
-  </section>
+    <details class="card" id="notes-box" hidden>
+      <summary><h2 id="notes-title">Сверка с INDEX</h2></summary>
+      <p class="small" style="margin:0">Страница сама считает, кто письмо уже прочитал: адресат ответил на него («ответ на NNN»), письмо заменено или выполнено, или адресат с тех пор уже писал на стол. Где это расходится со статусом в INDEX, видно здесь. Стол страница не меняет.</p>
+      <ul class="notes" id="notes"></ul>
+    </details>
 
-  <section>
-    <div class="sec-head"><h2>Полка книг</h2><span class="eyebrow">сами книги — на личном Drive</span></div>
-    <div class="shelf" id="books"></div>
-  </section>
+    <section class="card">
+      <div class="sec-head"><h2>Путь к «Да»</h2><span class="eyebrow">последние шаги</span></div>
+      <p class="small" style="margin:0" id="da-note"></p>
+      <ol class="steps" id="steps"></ol>
+    </section>
 
-  <footer><span id="footer"></span><br><button type="button" class="forget" id="calm">Меньше движения</button> <button type="button" class="forget" id="forget" hidden>Забыть ключ на этом телефоне</button></footer>
+    <section id="pisma">
+      <div class="sec-head"><h2>Письма</h2><span class="eyebrow">полоса слева — от кого</span></div>
+      <div class="filters" id="filters" role="group" aria-label="Показать письма"></div>
+      <ul class="letters" id="letters"></ul>
+      <button class="btn ghost more" type="button" id="more" hidden>Показать ещё</button>
+    </section>
+
+    <details class="card">
+      <summary><h2>Лестница движка</h2></summary>
+      <ol class="ladder" id="ladder"></ol>
+      <p class="small" id="ml" style="margin:0"></p>
+    </details>
+
+    <details class="card">
+      <summary><h2>Полки</h2></summary>
+      <div class="epigraph" id="epigraph"></div>
+      <span class="eyebrow">находки отца</span>
+      <div class="shelf" id="finds"></div>
+      <span class="eyebrow">книги (сами книги — на личном Drive)</span>
+      <div class="shelf" id="books"></div>
+    </details>
+
+    <footer>
+      <span id="footer"></span>
+      <span>Журнал решений живёт вне репозитория, поэтому страница его не видит и не сравнивает. «Да» на запуск — только в журнале.</span>
+      <div class="row"><button type="button" class="btn ghost" id="reload">Обновить</button><button type="button" class="btn ghost" id="forget" hidden>Забыть ключ</button></div>
+    </footer>
   </main>
 </div>
 
@@ -294,46 +268,72 @@ html { scroll-behavior: smooth; }
 
 <script>
 (function () {
-  const SEAT_POS = {
-    "наставник":   { x: 180, y: 192, lx: 180, ly: 172, anchor: "middle" },
-    "исполнитель": { x: 46,  y: 300, lx: 46,  ly: 346, anchor: "middle" },
-    "рецензент":   { x: 314, y: 300, lx: 314, ly: 346, anchor: "middle" },
-    "собеседник":  { x: 180, y: 412, lx: 180, ly: 452, anchor: "middle" }
-  };
-  const STACK_POS = {
-    "наставник": { x: 180, y: 240 }, "исполнитель": { x: 98, y: 300 },
-    "рецензент": { x: 262, y: 300 }, "собеседник": { x: 180, y: 360 }
-  };
-  const NS = "http://www.w3.org/2000/svg";
+  "use strict";
   const $ = (id) => document.getElementById(id);
-  const el = (tag, attrs, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
   const h = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
   const cap = (s) => s ? s[0].toUpperCase() + s.slice(1) : s;
-  let allLetters = [];
-  const CALM = "academia.calm";
-  const calm = () => document.documentElement.classList.contains("calm");
-  try { if (localStorage.getItem(CALM) === "1") document.documentElement.classList.add("calm"); } catch (e) {}
-  const COLOR = { "наставник": "var(--c-nas)", "исполнитель": "var(--c-isp)", "рецензент": "var(--c-rec)", "собеседник": "var(--c-sob)" };
-  const col = (w) => COLOR[w] || "var(--muted)";
-  const pill = (w) => { const p = h("span", "who-pill", cap(w)); p.style.setProperty("--pc", col(w)); return p; };
-  const arrow = () => h("span", "arrow", "→");
-  const DAT = { "наставник": "наставнику", "исполнитель": "исполнителю", "рецензент": "рецензенту", "собеседник": "собеседнику" };
-  const GEN = { "наставник": "наставника", "исполнитель": "исполнителя", "рецензент": "рецензента", "собеседник": "собеседника" };
-  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const store = {
+    get(k) { try { return localStorage.getItem(k) || ""; } catch (e) { return ""; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+    del(k) { try { localStorage.removeItem(k); } catch (e) {} }
+  };
 
-  // ——— Чтение стола. Источник — репозиторий divino74/diffiety, ветка main, только чтение. ———
+  // ——— Тема ———
+  const THEME = "academia.theme";
+  const applyTheme = (t) => { if (t) document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme; };
+  applyTheme(store.get(THEME));
+  $("theme").addEventListener("click", () => {
+    const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    const next = cur === "dark" ? "light" : "dark"; applyTheme(next); store.set(THEME, next);
+  });
+
+  // ——— Роли ———
+  const ROLES = ["наставник", "исполнитель", "рецензент", "собеседник"];
+  const COLOR = { "наставник": "var(--c-nas)", "исполнитель": "var(--c-isp)", "рецензент": "var(--c-rec)", "собеседник": "var(--c-sob)", "Митя": "var(--c-mit)", "судья": "var(--c-ext)" };
+  const TITLE = { "наставник": "Наставник", "исполнитель": "Исполнитель", "рецензент": "Рецензент", "собеседник": "Собеседник", "Митя": "Митя", "судья": "Внешний судья" };
+  const DAT = { "наставник": "наставнику", "исполнитель": "исполнителю", "рецензент": "рецензенту", "собеседник": "собеседнику", "Митя": "тебе", "судья": "судье" };
+  const GEN = { "наставник": "наставника", "исполнитель": "исполнителя", "рецензент": "рецензента", "собеседник": "собеседника" };
+  const DO = { "наставник": "прочитать и ответить", "исполнитель": "взять задание в работу", "рецензент": "проверить", "собеседник": "прочитать" };
+  const col = (w) => COLOR[w] || "var(--muted)";
+  const pill = (w) => { const p = h("span", "who-pill", TITLE[w] || cap(w)); p.style.setProperty("--pc", col(w)); return p; };
+  const arrow = () => h("span", "arrow", "→");
+  const nums3 = (s) => (String(s || "").match(/\b\d{3}\b/g) || []);
+  const listNums = (a) => a.length === 1 ? a[0] : a.slice(0, -1).join(", ") + " и " + a[a.length - 1];
+  const STALE = 25;        // письмо без ответа старше стольких номеров от последнего — «давний хвост»
+  const PAGE = 20;
+
+  function roleOf(text) {
+    const t = String(text || "");
+    if (/chatgpt|судья/i.test(t)) return "судья";
+    let best = null, pos = Infinity;
+    ROLES.forEach((r) => { const i = t.toLowerCase().indexOf(r); if (i >= 0 && i < pos) { pos = i; best = r; } });
+    if (best) return best;
+    if (/мит/i.test(t)) return "Митя";
+    return t.trim();
+  }
+  function parseTo(text) {
+    const t = String(text || "");
+    const k = t.indexOf("(");
+    const main = k >= 0 ? t.slice(0, k) : t, paren = k >= 0 ? t.slice(k) : "";
+    const roles = ROLES.filter((r) => main.toLowerCase().includes(r));
+    if (/мит/i.test(main)) roles.push("Митя");
+    if (/chatgpt|судья/i.test(main)) roles.push("судья");
+    const tog = paren.match(/вместе с ([^;)]*)/);
+    return {
+      roles, mitya: /мит/i.test(main) || /и Митя/.test(paren),
+      reviewFirst: /сначала рецензенту/.test(paren),
+      byMitya: /решению Мити|отмашки Мити/.test(paren),
+      together: tog ? nums3(tog[1]) : []
+    };
+  }
+
+  // ——— Чтение стола (только чтение, ветка main) ———
   const REPO = "divino74/diffiety", BRANCH = "main", KEY = "academia.token";
   const API = "https://api.github.com/repos/" + REPO + "/contents/";
   const HEADER_KEYS = new Set(["от", "кому", "ответ на", "дата", "положил", "по-простому"]);
-  const store = {
-    get() { try { return localStorage.getItem(KEY) || ""; } catch (e) { return ""; } },
-    set(v) { try { localStorage.setItem(KEY, v); } catch (e) {} },
-    clear() { try { localStorage.removeItem(KEY); } catch (e) {} }
-  };
   async function gh(path, token, raw) {
     const r = await fetch(API + path.split("/").map(encodeURIComponent).join("/") + "?ref=" + BRANCH, {
-      headers: { Authorization: "Bearer " + token, Accept: raw ? "application/vnd.github.raw+json" : "application/vnd.github+json" },
-      cache: "no-store"
+      headers: { Authorization: "Bearer " + token, Accept: raw ? "application/vnd.github.raw+json" : "application/vnd.github+json" }, cache: "no-store"
     });
     if (!r.ok) { const e = new Error(path + ": " + r.status); e.status = r.status; throw e; }
     return raw ? r.text() : r.json();
@@ -351,8 +351,10 @@ html { scroll-behavior: smooth; }
   function parseIndex(text) {
     const rows = {};
     text.split(/\r?\n/).forEach((line) => {
+      if (!/^\|\s*\d{3}/.test(line)) return;
       const c = line.trim().replace(/^\||\|$/g, "").split("|").map((x) => x.trim());
-      if (c.length === 5 && /^\d{3}$/.test(c[0])) rows[c[0]] = { from: c[1], to: c[2], gist: c[3], status: c[4] };
+      const num = c[0].slice(0, 3);
+      rows[num] = { from: c[1] || "", to: c[2] || "", gist: c.slice(3, -1).join("|"), status: c[c.length - 1] || "" };
     });
     return rows;
   }
@@ -370,346 +372,487 @@ html { scroll-behavior: smooth; }
     const m = lead.match(/От тебя:\s*(.+?)(?:$|\.(?=\s))/);
     return { header, lead, ask: m ? m[1].trim() : "" };
   }
-  function parseTable(index, files) {
+
+  // ——— Разбор: кто что прочитал, чей ход ———
+  function analyse(index, files) {
     const rows = parseIndex(index);
     const letters = Object.keys(files).sort().map((name) => {
       const num = name.slice(0, 3), row = rows[num] || {}, { header, lead, ask } = parseMessage(files[name]);
-      return { num, file: "table/" + name, from: header["от"] || row.from || "", to: header["кому"] || row.to || "",
-        reply_to: header["ответ на"] || "—", date: header["дата"] || "", placed_by: header["положил"] || "",
-        plain: header["по-простому"] || "", gist: row.gist || "", lead, ask, status: row.status || "новое" };
+      const fromText = header["от"] || row.from || "", toText = header["кому"] || row.to || "";
+      return { num, n: +num, file: "table/" + name, fromText, toText, from: roleOf(fromText), to: parseTo(toText),
+        replyTo: header["ответ на"] || "—", refs: nums3(header["ответ на"]), date: header["дата"] || "",
+        plain: header["по-простому"] || "", gist: row.gist || "", lead, ask, manual: row.status || "", inIndex: !!rows[num] };
     });
-    return { letters };
-  }
+    const byNum = {}; letters.forEach((L) => { byNum[L.num] = L; });
+    const last = letters.length ? letters[letters.length - 1].n : 0;
+    const lastWrote = {};
+    letters.forEach((L) => { lastWrote[L.from] = L.num; });
 
+    // заменено / выполнено
+    const closedBy = {};
+    letters.forEach((L) => {
+      const m = L.manual.match(/заменено\s*(\d{3})?/i); if (m) closedBy[L.num] = { kind: "заменено", by: m[1] || "" };
+      const d = L.manual.match(/выполнено\s*\(?([^)]*)\)?/i); if (d) closedBy[L.num] = { kind: "выполнено", by: (d[1] || "").trim() };
+    });
+    letters.forEach((M) => {
+      [M.toText, M.replyTo, M.gist].forEach((t) => {
+        const re = /взамен\s+((?:\d{3}(?:\s*(?:,|и)\s*)?)+)/g; let m;
+        while ((m = re.exec(t || ""))) nums3(m[1]).forEach((x) => { if (byNum[x] && byNum[x].n < M.n && !closedBy[x]) closedBy[x] = { kind: "заменено", by: M.num }; });
+      });
+    });
 
-  function drawShelves() {
-    const g = $("shelves");
-    const colors = ["var(--wood)", "var(--moss)", "var(--sky-1)", "var(--sky-2)", "var(--muted)", "var(--wood-dark)"];
-    [[12, 70], [278, 70]].forEach(([x0, w]) => {
-      for (let row = 0; row < 3; row++) {
-        const y = 40 + row * 42;
-        el("rect", { x: x0, y: y + 32, width: w, height: 4, fill: "var(--wood-dark)" }, g);
-        let x = x0 + 3, i = row * 3 + (x0 > 100 ? 2 : 0);
-        while (x < x0 + w - 6) {
-          const bw = 5 + ((i * 7) % 5), bh = 22 + ((i * 5) % 9);
-          el("rect", { x, y: y + 32 - bh, width: bw, height: bh, fill: colors[i % colors.length], opacity: .8 }, g);
-          x += bw + 1; i++;
-        }
+    // ответы
+    const answers = {}; // num -> role -> [nums]
+    letters.forEach((M) => M.refs.forEach((x) => {
+      if (!byNum[x] || byNum[x].n >= M.n) return;
+      ((answers[x] = answers[x] || {})[M.from] = answers[x][M.from] || []).push(M.num);
+    }));
+
+    letters.forEach((L) => {
+      L.closed = closedBy[L.num] || null;
+      // кто должен прочитать
+      let need = L.to.roles.filter((r) => ROLES.includes(r) && r !== L.from);
+      L.stages = [];
+      if (L.to.reviewFirst && !need.includes("рецензент")) L.stages.push("рецензент");
+      need.forEach((r) => L.stages.push(r));
+      L.per = L.stages.map((r) => {
+        const ans = (answers[L.num] || {})[r];
+        if (ans) return { role: r, state: "answered", by: ans[0] };
+        if (lastWrote[r] && +lastWrote[r] > L.n) return { role: r, state: "seen", by: lastWrote[r] };
+        return { role: r, state: "pending" };
+      });
+      // кандидат: исполнителю — только после рецензента
+      if (L.to.reviewFirst) {
+        const rv = L.per.find((p) => p.role === "рецензент");
+        if (rv && rv.state === "pending") L.per.forEach((p) => { if (p.role !== "рецензент" && p.state === "pending") p.state = "later"; });
+      }
+      L.waitFor = L.closed ? [] : L.per.filter((p) => p.state === "pending").map((p) => p.role);
+      L.stale = last - L.n > STALE;
+      L.auto = L.closed ? L.closed.kind : L.waitFor.length ? "ждёт" : L.per.length ? "прочитано" : "без адресата";
+      const manualNew = /^нов/i.test(L.manual);
+      L.mismatch = null;
+      if (!L.inIndex) L.mismatch = "нет строки в INDEX";
+      else if (manualNew && !L.waitFor.length && L.per.length) {
+        const p = L.per.find((x) => x.state === "answered") || L.per.find((x) => x.state === "seen");
+        L.mismatch = L.closed ? `в INDEX «новое», но письмо ${L.closed.kind}${L.closed.by ? " (" + L.closed.by + ")" : ""}` :
+          p && p.state === "answered" ? `в INDEX «новое», но ${TITLE[p.role].toLowerCase()} уже ответил письмом ${p.by}` :
+          p ? `в INDEX «новое», но ${TITLE[p.role].toLowerCase()} с тех пор уже писал (${p.by}) — видимо, прочитано` : null;
+      } else if (manualNew && L.waitFor.length && L.stale) {
+        L.mismatch = `в INDEX «новое» давно (на ${last - L.n} номеров раньше последнего), ответа нет — возможно, уже не нужно`;
+      } else if (manualNew && !L.per.length && L.to.mitya) {
+        L.mismatch = "письмо тебе: в INDEX «новое», а прочёл ли ты, страница знать не может";
+      } else if (!manualNew && L.waitFor.length && !L.closed && !/выполн|замен/i.test(L.manual)) {
+        L.mismatch = `в INDEX «${L.manual}», но от ${L.waitFor.map((r) => GEN[r]).join(", ")} после него писем ещё не было`;
       }
     });
+
+    // кому что лежит (без давних хвостов)
+    const pending = {}; ROLES.forEach((r) => { pending[r] = []; });
+    const tails = [];
+    letters.forEach((L) => L.waitFor.forEach((r) => { if (L.stale) tails.push(L); else pending[r].push(L); }));
+
+    // чей ход: роль с самым свежим письмом без ответа
+    let turn = null;
+    ROLES.forEach((r) => {
+      const arr = pending[r]; if (!arr.length) return;
+      const top = arr[arr.length - 1];
+      if (!turn || top.n > turn.top.n) turn = { role: r, top, list: arr };
+    });
+    if (turn) {
+      const set = new Set(turn.list.map((L) => L.num));
+      turn.top.to.together.forEach((x) => set.add(x));
+      turn.nums = [...set].filter((x) => byNum[x] && !byNum[x].closed).sort();
+      turn.byMitya = turn.list.some((L) => L.to.byMitya) || turn.list.some((L) => L.to.reviewFirst && L.per.some((p) => p.role === "рецензент" && p.state !== "pending"));
+    }
+    const daLetter = [...letters].reverse().find((L) => /«Да»/.test(L.lead + " " + L.plain));
+    return { letters, byNum, pending, tails: [...new Set(tails)], turn, last, daLetter };
   }
 
-  function drawSeats(world, waiting) {
-    const g = $("seats");
-    world.seats.forEach((s) => {
-      const p = SEAT_POS[s.id]; if (!p) return;
-      const n = waiting[s.id] || 0;
-      const seat = el("g", { class: "seat", tabindex: "0", role: "button", "aria-label": s.title + (n ? ", ждут писем: " + n : "") }, g);
-      if (n) {
-        const glow = el("circle", { cx: p.x, cy: p.y, r: 46, fill: "url(#glow)" }, seat);
-        if (!reduce) { const a = el("animate", { attributeName: "opacity", values: "1;.7;1", dur: "3.2s", repeatCount: "indefinite" }, glow); }
+  // ——— Фразы для копирования ———
+  function goPhrase(role, nums) {
+    const many = nums.length > 1;
+    return `${TITLE[role]}, на столе ${many ? "письма" : "письмо"} ${listNums(nums)}, начни с ${many ? "них" : "него"}. Запуск — нет без отдельного «Да» Мити в журнале.`;
+  }
+  function askPhrase(L) {
+    return `Собеседник, объясни письмо ${L.num} (${L.fromText} → ${L.toText}: ${L.plain || L.gist || L.lead}) и подскажи, что ответить.`;
+  }
+  function copy(text, note, ok) {
+    note.textContent = "";
+    const fallback = () => {
+      note.textContent = "Скопировать не вышло. Выдели текст и скопируй сам:";
+      const ta = h("textarea", "fallback"); ta.rows = 3; ta.value = text; ta.readOnly = true;
+      note.appendChild(ta); ta.focus(); ta.select();
+    };
+    try { navigator.clipboard.writeText(text).then(() => { note.textContent = ok; }, fallback); } catch (e) { fallback(); }
+  }
+
+  // ——— Отрисовка ———
+  let A = null, filter = { kind: "wait" }, shown = PAGE;
+
+  function renderHero() {
+    const box = $("hero"); box.textContent = "";
+    const t = A.turn;
+    box.appendChild(h("span", "label", "Сейчас ход"));
+    if (!t) {
+      const who = h("div", "who"); who.textContent = "Все письма дошли"; box.appendChild(who);
+      box.appendChild(h("div", "what", "Ни одно свежее письмо не ждёт ответа. Стол ждёт следующего письма."));
+      return;
+    }
+    const who = h("div", "who");
+    const dot = h("span", "dot"); dot.style.setProperty("--pc", col(t.role));
+    if (t.byMitya) { who.append(dot, "Твой — отнести " + DAT[t.role]); }
+    else { who.append(dot, TITLE[t.role]); }
+    box.appendChild(who);
+    const what = h("div", "what");
+    const nums = h("span", "nums", t.nums.join(" + "));
+    if (t.byMitya) what.append("Реши, отдавать ли " + DAT[t.role] + " ", nums, ". Это отправка письма, не «Да» на прогон.");
+    else what.append(cap(DO[t.role] || "прочитать") + " ", nums, ". Если ещё не отнёс — отнеси " + DAT[t.role] + ".");
+    box.appendChild(what);
+    const L = t.top;
+    box.appendChild(h("div", "note", "Последнее: № " + L.num + " от " + (GEN[L.from] || L.fromText) + ". " + (L.plain || firstSentence(L.lead))));
+    const row = h("div", "row"), note = h("div", "copied");
+    const go = h("button", "btn", "Скопировать отмашку"); go.type = "button";
+    go.addEventListener("click", () => copy(goPhrase(t.role, t.nums), note, "Скопировано. Вставь в тред " + GEN[t.role] + "."));
+    const open = h("button", "btn ghost", "Открыть № " + L.num); open.type = "button";
+    open.addEventListener("click", () => showLetter(L));
+    row.append(go, open); box.append(row, note);
+  }
+
+  const SVGNS = "http://www.w3.org/2000/svg";
+  const sv = (tag, attrs, parent) => { const n = document.createElementNS(SVGNS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
+  // Стол заседаний: по двое с каждой длинной стороны; письма лежат на столе перед адресатом
+  // Стол заседаний: Митя внизу, собеседник по правую руку от него, исполнитель напротив,
+  // наставник и рецензент — друг против друга по торцам. Письма лежат на столе перед адресатом.
+  const SEATS = {
+    "исполнитель": { x: 180, y: 50,  dir: "top" },
+    "Митя":        { x: 138, y: 214, dir: "bottom" },
+    "собеседник":  { x: 222, y: 214, dir: "bottom" },
+    "наставник":   { x: 34,  y: 124, dir: "left" },
+    "рецензент":   { x: 324, y: 124, dir: "right" }
+  };
+  function goTo(r) { filter = { kind: "to", who: r }; shown = PAGE; renderFilters(); renderLetters(); $("pisma").scrollIntoView({ behavior: "smooth" }); }
+  // Аватары: Митя — Данте, собеседник — Вергилий (проводник), наставник — Платон (основатель Академии),
+  // рецензент — Аристотель («Платон мне друг, но истина дороже»), исполнитель — Архимед (инженер, «дайте точку опоры»).
+  const PERSONA = { "Митя": "Данте", "собеседник": "Вергилий", "наставник": "Платон", "рецензент": "Аристотель", "исполнитель": "Архимед" };
+  let clipN = 0;
+  function avatar(g, p, who, color, now) {
+    const R = 21, id = "av" + (clipN++);
+    if (now) sv("circle", { cx: p.x, cy: p.y, r: R + 5, fill: "none", stroke: "var(--accent)", "stroke-width": 2.5, class: "ring" }, g);
+    const cp = sv("clipPath", { id }, g); sv("circle", { cx: 0, cy: 0, r: R }, cp);
+    const a = sv("g", { "clip-path": `url(#${id})` }, sv("g", { transform: `translate(${p.x} ${p.y})` }, g));
+    sv("circle", { cx: 0, cy: 0, r: R, fill: color, opacity: .28 }, a);
+    const SKIN = "#e7c6a2", GREY = "#b8b2aa", DARK = "#4a3a2e", LAUREL = "#4f7a3a";
+    const robe = { "Данте": "#9b2a22", "Вергилий": "#f1ede4", "Платон": "#d9cfbf", "Аристотель": "#5c6f8a", "Архимед": "#c8a15a" }[who];
+    sv("path", { d: "M-17 24 Q-15 7 0 6 Q15 7 17 24Z", fill: robe }, a);                 // плечи, тога
+    if (who === "Вергилий" || who === "Платон") sv("path", { d: "M-9 7 L4 24 L8 24 L-3 7Z", fill: "rgba(0,0,0,.12)" }, a); // складка тоги
+    sv("rect", { x: -3.5, y: 0, width: 7, height: 7, fill: SKIN }, a);                       // шея
+    sv("circle", { cx: 0, cy: -5, r: 8.5, fill: SKIN }, a);                                 // голова
+    if (who === "Платон") {
+      sv("path", { d: "M-8.5 -6 Q-9 -15 0 -14.5 Q9 -15 8.5 -6 Q6 -11 0 -11 Q-6 -11 -8.5 -6Z", fill: GREY }, a);
+      sv("path", { d: "M-8 -3 Q-9 12 0 14 Q9 12 8 -3 Q5 2 0 2 Q-5 2 -8 -3Z", fill: GREY }, a); // длинная борода
+    } else if (who === "Аристотель") {
+      sv("path", { d: "M-8.5 -6 Q-9 -15 0 -14.5 Q9 -15 8.5 -6 Q6 -10 0 -10 Q-6 -10 -8.5 -6Z", fill: DARK }, a);
+      sv("path", { d: "M-7.5 -2 Q-7 7 0 8 Q7 7 7.5 -2 Q4 2 0 2 Q-4 2 -7.5 -2Z", fill: DARK }, a);   // короткая борода
+      sv("rect", { x: 7, y: 12, width: 9, height: 6, rx: 3, fill: "#efe6d2", stroke: "#a8946a", "stroke-width": .8 }, a); // свиток
+    } else if (who === "Архимед") {
+      sv("path", { d: "M-8.5 -7 Q-6 -14 0 -14 Q6 -14 8.5 -7 Q5 -10 0 -10 Q-5 -10 -8.5 -7Z", fill: GREY }, a);
+      sv("path", { d: "M-8 -3 Q-8 9 0 10 Q8 9 8 -3 Q4 1 0 1 Q-4 1 -8 -3Z", fill: GREY }, a);
+      const c = sv("g", { stroke: "#2a2a2a", "stroke-width": 1.3, "stroke-linecap": "round", fill: "none" }, a);   // циркуль
+      sv("path", { d: "M11 9 L8 21 M11 9 L15 21" }, c); sv("circle", { cx: 11, cy: 8.5, r: 1.2, fill: "#2a2a2a" }, c);
+    } else if (who === "Вергилий") {
+      sv("path", { d: "M-8.5 -6 Q-8 -14 0 -14 Q8 -14 8.5 -6 Q5 -10 0 -10 Q-5 -10 -8.5 -6Z", fill: "#7a5a3a" }, a);
+      [-7, -4, -1, 2, 5].forEach((x, k) => sv("ellipse", { cx: x + 1, cy: -12 + Math.abs(k - 2) * 1.2, rx: 2.4, ry: 1.3, fill: LAUREL, transform: `rotate(${(k - 2) * 18} ${x + 1} -12)` }, a)); // лавры
+    } else if (who === "Данте") {
+      sv("path", { d: "M-10.5 3 Q-12 -17 0 -16 Q12 -17 10.5 3 L7.5 3 Q8 -10 0 -10 Q-8 -10 -7.5 3Z", fill: "#9b2a22" }, a); // красный капюшон
+      [-6, -3, 0, 3, 6].forEach((x, k) => sv("ellipse", { cx: x, cy: -12 + Math.abs(k - 2) * 1, rx: 2.2, ry: 1.2, fill: LAUREL, transform: `rotate(${(k - 2) * 20} ${x} -12)` }, a));
+    }
+    sv("circle", { cx: p.x, cy: p.y, r: R, fill: "none", stroke: color, "stroke-width": 2 }, g);
+  }
+  // Второй вид: медальоны с эмблемами. Платон — додекаэдр (платоново тело), Аристотель — раскрытая книга,
+  // Архимед — шар в цилиндре (чертёж с его надгробия), Вергилий — лавровый венок, Данте — звезда («…и вышли вновь узреть светила»).
+  function emblem(g, p, who, color, now) {
+    const R = 21, GOLD = "#d9b45f", INK = "#1b2740";
+    if (now) sv("circle", { cx: p.x, cy: p.y, r: R + 5, fill: "none", stroke: "var(--accent)", "stroke-width": 2.5, class: "ring" }, g);
+    const a = sv("g", { transform: `translate(${p.x} ${p.y})` }, g);
+    sv("circle", { cx: 0, cy: 0, r: R, fill: INK, stroke: color, "stroke-width": 2.5 }, a);
+    sv("circle", { cx: 0, cy: 0, r: R - 4, fill: "none", stroke: GOLD, "stroke-width": .7, opacity: .7 }, a);
+    const ic = sv("g", { fill: "none", stroke: GOLD, "stroke-width": 1.3, "stroke-linejoin": "round", "stroke-linecap": "round" }, a);
+    const poly = (r, rot, n) => Array.from({ length: n }, (_, k) => { const t = rot + k * 2 * Math.PI / n; return [r * Math.cos(t), r * Math.sin(t)]; });
+    const pts = (arr) => arr.map((q) => q[0].toFixed(2) + "," + q[1].toFixed(2)).join(" ");
+    if (who === "Платон") {
+      const o = poly(11, -Math.PI / 2, 5), m = poly(7.6, -Math.PI / 2, 5), i = poly(4.6, Math.PI / 2, 5);
+      sv("polygon", { points: pts(o) }, ic); sv("polygon", { points: pts(i) }, ic);
+      o.forEach((q, k) => sv("line", { x1: q[0], y1: q[1], x2: m[k][0], y2: m[k][1] }, ic));
+      m.forEach((q, k) => { const a1 = i[(k + 2) % 5], a2 = i[(k + 3) % 5]; sv("polyline", { points: pts([a1, q, a2]) }, ic); });
+    } else if (who === "Аристотель") {
+      sv("path", { d: "M0 -6 Q-6 -9 -11 -7 L-11 8 Q-6 6 0 9 Q6 6 11 8 L11 -7 Q6 -9 0 -6 Z M0 -6 L0 9" }, ic);
+      [-2, 1.5, 5].forEach((y) => { sv("line", { x1: -8, y1: y - 2, x2: -3, y2: y - 1 }, ic); sv("line", { x1: 3, y1: y - 1, x2: 8, y2: y - 2 }, ic); });
+    } else if (who === "Архимед") {
+      sv("rect", { x: -8.5, y: -9, width: 17, height: 18 }, ic);
+      sv("circle", { cx: 0, cy: 0, r: 8.5 }, ic);
+      sv("ellipse", { cx: 0, cy: 0, rx: 8.5, ry: 2.6, opacity: .6 }, ic);
+    } else if (who === "Вергилий") {
+      [-1, 1].forEach((sd) => {
+        sv("path", { d: `M${sd * 2} 10 Q${sd * 12} 6 ${sd * 9} -9` }, ic);
+        [[8, 6], [10.5, 1], [10.5, -4], [8.5, -8.5]].forEach(([x, y], k) =>
+          sv("ellipse", { cx: sd * x, cy: y, rx: 3, ry: 1.4, fill: GOLD, stroke: "none", transform: `rotate(${sd * (-60 + k * 25)} ${sd * x} ${y})` }, ic));
+      });
+    } else if (who === "Данте") {
+      const st = []; for (let k = 0; k < 16; k++) { const r = k % 2 ? 4 : 11.5, t = -Math.PI / 2 + k * Math.PI / 8; st.push([r * Math.cos(t), r * Math.sin(t)]); }
+      sv("polygon", { points: pts(st), fill: GOLD, "fill-opacity": .25 }, ic);
+    }
+  }
+  const LOOK = "academia.look";
+  let look = store.get(LOOK) || "emblem";
+
+  function renderBoard() {
+    const box = $("board"); box.textContent = "";
+    const svg = sv("svg", { viewBox: "0 0 360 268", role: "img", "aria-label": "Стол заседаний: у кого лежат письма без ответа" }, box);
+    const defs = sv("defs", {}, svg);
+    const g1 = sv("linearGradient", { id: "wood", x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+    sv("stop", { offset: 0, "stop-color": "var(--table-top)" }, g1); sv("stop", { offset: 1, "stop-color": "var(--table)" }, g1);
+    const sh = sv("filter", { id: "sh", x: "-10%", y: "-10%", width: "120%", height: "140%" }, defs);
+    sv("feDropShadow", { dx: 0, dy: 4, stdDeviation: 4, "flood-opacity": .18 }, sh);
+    sv("rect", { x: 60, y: 74, width: 240, height: 114, rx: 10, fill: "url(#wood)", stroke: "var(--table-edge)", "stroke-width": 3, filter: "url(#sh)" }, svg);
+    sv("rect", { x: 70, y: 84, width: 220, height: 94, rx: 6, fill: "none", stroke: "var(--table-edge)", "stroke-width": 1, opacity: .45 }, svg);
+    const plate = sv("text", { x: 180, y: 136, "text-anchor": "middle", class: "plate" }, svg); plate.textContent = "АКАДЕМИЯ";
+    const sw = h("div", "look"); sw.setAttribute("role", "group"); sw.setAttribute("aria-label", "Вид фигур за столом");
+    [["emblem", "Эмблемы"], ["portrait", "Портреты"]].forEach(([k, txt]) => {
+      const b = h("button", "chip-btn", txt); b.type = "button"; b.setAttribute("aria-pressed", look === k ? "true" : "false");
+      b.addEventListener("click", () => { look = k; store.set(LOOK, k); renderBoard(); });
+      sw.appendChild(b);
+    });
+    box.appendChild(sw);
+    const t = A.turn;
+    const label = (g, p, name, role, now) => {
+      const pos = { top: [p.x, 10], bottom: [p.x, 250], left: [p.x, 162], right: [p.x - 6, 162] }[p.dir];
+      const l = sv("text", { x: pos[0], y: pos[1], "text-anchor": "middle", class: "lbl" + (now ? " now" : "") }, g); l.textContent = name;
+      const r = sv("text", { x: pos[0], y: pos[1] + 12, "text-anchor": "middle", class: "role" }, g); r.textContent = role;
+    };
+    // Митя
+    const mine = !!(t && t.byMitya), mp = SEATS["Митя"];
+    const mg = sv("g", { "aria-label": "Митя" + (mine ? ", сейчас ход за тобой" : "") }, svg);
+    (look === "emblem" ? emblem : avatar)(mg, mp, "Данте", "var(--c-mit)", mine); label(mg, mp, "Данте", "Митя", mine);
+    ROLES.forEach((r) => {
+      const p = SEATS[r], arr = A.pending[r], now = t && t.role === r;
+      const g = sv("g", { class: "seat", tabindex: 0, role: "button", "aria-label": TITLE[r] + (arr.length ? ", ждут: " + arr.map((L) => L.num).join(", ") : ", ничего не ждёт") }, svg);
+      (look === "emblem" ? emblem : avatar)(g, p, PERSONA[r], col(r), now); label(g, p, PERSONA[r], r, now);
+      // письма на столе перед креслом
+      const st = { top: [p.x - 14, 90], bottom: [p.x - 14, 146], left: [74, 118], right: [256, 118] }[p.dir];
+      const n = Math.min(arr.length, 4);
+      arr.slice(-4).forEach((L, i) => {
+        const x = st[0] + i * 5, y = st[1] + (p.dir === "bottom" ? -i * 2 : i * 2);
+        const d = sv("g", { transform: `rotate(${(i % 2 ? 5 : -4)} ${x + 9} ${y + 12})` }, g);
+        sv("rect", { x, y, width: 18, height: 24, rx: 2, fill: "var(--paper)", stroke: "rgba(0,0,0,.25)", "stroke-width": .6 }, d);
+        sv("rect", { x, y, width: 18, height: 4, rx: 1, fill: col(L.from) }, d);
+        [9, 13, 17].forEach((ly) => sv("line", { x1: x + 3, y1: y + ly, x2: x + 15, y2: y + ly, stroke: "rgba(0,0,0,.18)", "stroke-width": 1 }, d));
+      });
+      if (arr.length) {
+        const bx = p.dir === "right" ? st[0] - 8 : st[0] + 18 + n * 5 + 6, by = st[1] + (p.dir === "bottom" ? 22 : 2);
+        sv("circle", { cx: bx, cy: by, r: 10, fill: now ? "var(--accent)" : col(r) }, g);
+        const c = sv("text", { x: bx, y: by + 4, "text-anchor": "middle", class: "cnt" }, g); c.textContent = arr.length;
       }
-      const fig = el("g", { class: "fig" + (n ? " busy" : ""), style: `animation-delay:${-(s.id.length % 4) * 0.7}s` }, seat);
-      el("path", { d: `M${p.x - 20} ${p.y + 18} Q${p.x} ${p.y - 6} ${p.x + 20} ${p.y + 18}Z`, fill: col(s.id), opacity: .85 }, fig);
-      const headG = el("g", { class: "headg" }, fig);
-      el("circle", { class: "head", cx: p.x, cy: p.y - 4, r: 11, fill: col(s.id), stroke: n ? "var(--lamp)" : "var(--wall)", "stroke-width": n ? 2.5 : 1 }, headG);
-      if (n) { const pen = el("line", { class: "pen", x1: p.x + 12, y1: p.y + 14, x2: p.x + 18, y2: p.y + 4, stroke: "var(--paper)", "stroke-width": 2, "stroke-linecap": "round" }, fig); }
-      el("rect", { x: p.x - 34, y: p.y - 34, width: 68, height: 68, fill: "transparent" }, seat);
-      // лампа
-      const lx = p.x + 22, ly = p.y - 16;
-      el("circle", { class: n ? "seatlamp on" : "seatlamp", cx: lx, cy: ly, r: 5, fill: n ? "var(--lamp)" : "var(--wall-2)", stroke: "var(--muted)", "stroke-width": n ? 0 : 1 }, seat);
-      const t = el("text", { x: p.lx, y: p.ly, "text-anchor": p.anchor, fill: col(s.id) }, seat); t.textContent = s.title;
-      seat.addEventListener("click", () => { bounce(fig); setTimeout(() => filterTo(s.id, true), reduce ? 0 : 280); });
-      seat.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); filterTo(s.id, true); } });
+      const hit = { top: [p.x - 44, 0, 88, 126], bottom: [p.x - 40, 140, 80, 128], left: [0, 80, 110, 104], right: [250, 80, 110, 104] }[p.dir];
+      sv("rect", { x: hit[0], y: hit[1], width: hit[2], height: hit[3], fill: "transparent" }, g);
+      g.addEventListener("click", () => goTo(r));
+      g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goTo(r); } });
     });
   }
 
-  function bounce(node) {
-    if (reduce || calm()) return;
-    node.classList.remove("hop"); void node.getBoundingClientRect(); node.classList.add("hop");
-  }
-  function sparkle(x, y) {
-    const c = el("circle", { cx: x, cy: y, r: 2, fill: "var(--lamp)", class: "spark" }, $("flight"));
-    setTimeout(() => c.remove(), 700);
-  }
-  function envelope(parent, x, y, rot, L) {
-    const g = el("g", { transform: `translate(${x} ${y}) rotate(${rot})` }, parent);
-    el("rect", { x: -11, y: -7, width: 22, height: 14, rx: 1.5, fill: "var(--paper)", stroke: "var(--wood-dark)", "stroke-width": 1 }, g);
-    el("rect", { x: -11, y: -7, width: 4, height: 14, fill: col(L.from) }, g);
-    el("path", { d: "M-11 -7 L0 1 L11 -7", fill: "none", stroke: "var(--wood-dark)", "stroke-width": 1 }, g);
-    el("circle", { cx: 0, cy: 1, r: 3, fill: col(L.to) }, g);
-    return g;
+  function renderTiles() {
+    const box = $("tiles"); box.textContent = "";
+    ROLES.forEach((r) => {
+      const arr = A.pending[r];
+      const b = h("button", "tile" + (A.turn && A.turn.role === r ? " now" : "")); b.type = "button";
+      b.style.setProperty("--pc", col(r));
+      const name = h("span", "name"); name.append(TITLE[r]);
+      const c = h("span", "count" + (arr.length ? "" : " zero"), arr.length ? String(arr.length) : "—"); name.appendChild(c);
+      b.appendChild(name);
+      b.appendChild(h("span", "sub", arr.length ? arr.map((L) => L.num).join(", ") : "ничего не ждёт"));
+      b.setAttribute("aria-label", TITLE[r] + (arr.length ? ": ждут " + arr.length + " — " + arr.map((L) => L.num).join(", ") : ": ничего не ждёт"));
+      b.addEventListener("click", () => { filter = { kind: "to", who: r }; shown = PAGE; renderFilters(); renderLetters(); $("pisma").scrollIntoView({ behavior: "smooth" }); });
+      box.appendChild(b);
+    });
+    $("tiles-hint").textContent = "Письмо лежит у адресата, пока он не ответил на него и не писал на стол после него. Если ты его уже отнёс — значит, ждём ответа." +
+      (A.tails.length ? ` Давние хвосты без ответа (${A.tails.map((L) => L.num).join(", ")}) сюда не входят — они в сверке ниже.` : "");
   }
 
-  function drawStacks(letters) {
-    const g = $("stacks"); g.textContent = "";
-    const per = {};
-    letters.forEach((L) => { if (L.status === "новое") (per[L.to] = per[L.to] || []).push(L); });
-    Object.entries(per).forEach(([to, arr]) => {
-      const p = STACK_POS[to]; if (!p) return;
-      arr.forEach((L, i) => envelope(g, p.x + i * 3 - arr.length * 1.5, p.y - i * 3, (i % 2 ? 6 : -5), L));
-      const b = el("g", {}, g);
-      el("circle", { cx: p.x + 16, cy: p.y - 14 - arr.length * 2, r: 8, fill: "var(--lamp)" }, b);
-      const t = el("text", { x: p.x + 16, y: p.y - 10 - arr.length * 2, "text-anchor": "middle", class: "cnt", "font-family": "IBM Plex Mono, monospace", "font-size": 11, fill: "var(--night)" }, b);
-      t.textContent = arr.length;
+  function renderNotes() {
+    const list = A.letters.filter((L) => L.mismatch);
+    const box = $("notes"); box.textContent = "";
+    $("notes-box").hidden = !list.length;
+    $("notes-title").textContent = "Сверка с INDEX: " + list.length;
+    [...list].reverse().forEach((L) => {
+      const li = h("li"); li.appendChild(h("b", null, L.num + " ")); li.append(L.mismatch); box.appendChild(li);
     });
   }
 
-  function fly(L) {
-    return new Promise((resolve) => {
-      const a = SEAT_POS[L.from], b = STACK_POS[L.to];
-      if (!a || !b || reduce || calm()) return resolve();
-      const g = $("flight");
-      const env = envelope(g, a.x, a.y, 0, L);
-      const cx = (a.x + b.x) / 2, cy = Math.min(a.y, b.y) - 70;
-      const t0 = performance.now(), dur = 650;
-      function step(now) {
-        const t = Math.min(1, (now - t0) / dur), e = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-        const x = (1 - e) * (1 - e) * a.x + 2 * (1 - e) * e * cx + e * e * b.x;
-        const y = (1 - e) * (1 - e) * a.y + 2 * (1 - e) * e * cy + e * e * b.y;
-        if (Math.random() < .35) sparkle(x + (Math.random() - .5) * 6, y + (Math.random() - .5) * 6);
-        env.setAttribute("transform", `translate(${x} ${y}) rotate(${(1 - e) * -20}) scale(${1 + Math.sin(e * Math.PI) * .5})`);
-        if (t < 1) requestAnimationFrame(step); else { env.remove(); resolve(); }
-      }
-      requestAnimationFrame(step);
-    });
+  const firstSentence = (t) => { const m = (t || "").match(/^.+?[.!?](?=\s|$)/); return m ? m[0] : (t || ""); };
+  function stepItem(L) {
+    const li = h("li");
+    li.style.setProperty("--from", col(L.from)); li.style.setProperty("--to", col(L.to.roles[0]));
+    li.appendChild(h("span", "rail"));
+    const b = h("button"); b.type = "button";
+    const meta = h("span", "meta"); meta.append(pill(L.from), arrow());
+    (L.to.roles.length ? L.to.roles : [L.toText]).forEach((r, i) => { if (i) meta.append(", "); meta.appendChild(pill(r)); });
+    meta.appendChild(h("span", "no", "№ " + L.num + (L.date ? " · " + L.date.split("-").reverse().slice(0, 2).join(".") : "")));
+    b.append(meta, h("span", "say" + (L.plain ? "" : " fallback"), cap(L.plain || firstSentence(L.lead))));
+    b.addEventListener("click", () => showLetter(L));
+    li.appendChild(b); return li;
   }
+  function renderSteps() {
+    const ol = $("steps"); ol.textContent = "";
+    $("da-note").textContent = "Список шагов до «Да» на столе не записан, поэтому страница его не выдумывает. Вот последние шаги стола, новые сверху." +
+      (A.daLetter ? ` Последнее письмо о «Да» — № ${A.daLetter.num}.` : "");
+    A.letters.slice(-6).reverse().forEach((L) => ol.appendChild(stepItem(L)));
+  }
+
+  function badgeFor(L) {
+    if (L.closed) return [h("span", "badge ok", L.closed.kind + (L.closed.by ? " " + L.closed.by : ""))];
+    const out = [];
+    L.per.forEach((p) => {
+      if (p.state === "pending") out.push(h("span", "badge wait", "ждёт: " + TITLE[p.role].toLowerCase()));
+      else if (p.state === "later") out.push(h("span", "badge", TITLE[p.role].toLowerCase() + " — после рецензента"));
+      else if (p.state === "answered") out.push(h("span", "badge ok", TITLE[p.role].toLowerCase() + " ответил: " + p.by));
+      else out.push(h("span", "badge ok", TITLE[p.role].toLowerCase() + " видел"));
+    });
+    if (L.mismatch) out.push(h("span", "badge warn", "≠ INDEX"));
+    return out;
+  }
+
+  function renderFilters() {
+    const box = $("filters"); box.textContent = "";
+    const mk = (label, f, color, n) => {
+      const b = h("button", "chip-btn"); b.type = "button";
+      if (color) { b.style.setProperty("--pc", color); b.appendChild(h("span", "dot")); }
+      b.append(label); if (n) b.appendChild(h("span", "n", String(n)));
+      b.setAttribute("aria-pressed", f.kind === filter.kind && f.who === filter.who ? "true" : "false");
+      b.addEventListener("click", () => { filter = f; shown = PAGE; renderFilters(); renderLetters(); });
+      box.appendChild(b);
+    };
+    const nWait = A.letters.filter((L) => L.waitFor.length && !L.stale).length;
+    mk("Ждут", { kind: "wait" }, null, nWait);
+    mk("Все", { kind: "all" }, null, 0);
+    ROLES.forEach((r) => mk(cap(DAT[r]), { kind: "to", who: r }, col(r), A.pending[r].length));
+  }
+  function renderLetters() {
+    const ul = $("letters"); ul.textContent = "";
+    let list = [...A.letters].reverse();
+    if (filter.kind === "wait") list = list.filter((L) => L.waitFor.length && !L.stale);
+    if (filter.kind === "to") list = list.filter((L) => L.stages.includes(filter.who));
+    if (!list.length) ul.appendChild(h("li", "empty", filter.kind === "wait" ? "Свежих писем без ответа нет." : "Писем нет."));
+    list.slice(0, shown).forEach((L) => {
+      const li = h("li");
+      const btn = h("button", "letter"); btn.type = "button";
+      btn.style.setProperty("--from", col(L.from));
+      const head = h("span", "head");
+      const route = h("span", "route"); route.append(pill(L.from), arrow());
+      (L.to.roles.length ? L.to.roles : [L.toText]).forEach((r, i) => { if (i) route.append(", "); route.appendChild(pill(r)); });
+      head.append(route, h("span", "num", "№ " + L.num));
+      const badges = h("span", "badges"); badgeFor(L).forEach((b) => badges.appendChild(b));
+      btn.append(head, h("span", "gist", cap(L.plain || L.gist || L.lead)), badges);
+      btn.addEventListener("click", () => showLetter(L));
+      li.appendChild(btn); ul.appendChild(li);
+    });
+    $("more").hidden = list.length <= shown;
+  }
+  $("more").addEventListener("click", () => { shown += PAGE; renderLetters(); });
 
   function openSheet(build) {
     const body = $("sheet-body"); body.textContent = "";
     build(body);
-    const close = h("button", null, "Закрыть"); close.type = "button";
+    const close = h("button", "btn ghost", "Закрыть"); close.type = "button";
     close.addEventListener("click", () => $("sheet").close());
     body.appendChild(close);
     $("sheet").showModal();
   }
   $("sheet").addEventListener("click", (e) => { if (e.target === $("sheet")) $("sheet").close(); });
 
-  function showLetter(L, world) {
+  function showLetter(L) {
     openSheet((b) => {
-      b.appendChild(h("div", "route", `№ ${L.num} · ${L.date}${L.reply_to && L.reply_to !== "—" ? " · ответ на " + L.reply_to : ""}`));
-      const pair = h("div", "pair");
-      const tag = (w, pre) => { const t = h("span", "tag", pre + cap(w)); t.style.setProperty("--pc", col(w)); return t; };
-      pair.append(tag(L.from, "от: "), arrow(), tag(L.to, "кому: ")); b.appendChild(pair);
-      b.appendChild(h("h3", null, cap(L.plain || L.gist || L.lead.slice(0, 80))));
-      if (L.ask) { const a = h("div", "ask"); a.appendChild(h("b", null, "Что нужно от адресата: ")); a.appendChild(document.createTextNode(L.ask)); b.appendChild(a); }
+      b.appendChild(h("div", "route", `№ ${L.num} · ${L.date}${L.replyTo && L.replyTo !== "—" ? " · ответ на " + L.replyTo : ""}`));
+      const pair = h("div", "meta");
+      const tag = (w, t) => { const x = h("span", "tag", t); x.style.setProperty("--pc", col(w)); return x; };
+      pair.append(tag(L.from, "от: " + L.fromText), arrow(), tag(L.to.roles[0], "кому: " + L.toText)); b.appendChild(pair);
+      b.appendChild(h("h3", null, cap(L.plain || L.gist || L.lead.slice(0, 120))));
+      if (L.ask) { const a = h("div", "ask"); a.appendChild(h("b", null, "Что нужно от адресата: ")); a.append(L.ask); b.appendChild(a); }
       b.appendChild(h("p", "lead", cap(L.lead)));
-      b.appendChild(h("div", "route", L.status === "новое" ? "Ещё не прочитано адресатом." : "Прочитано."));
-      const acts = h("div", "actions");
-      const note = h("div", "copied");
-      const go = h("button", null, "Отмашка " + (DAT[L.to] || L.to)); go.type = "button";
-      go.addEventListener("click", () => copy(goPhrase(L), note, "Фраза для " + (GEN[L.to] || L.to) + " скопирована. Вставь её в его тред."));
-      const ask = h("button", "alt", "Спросить собеседника"); ask.type = "button";
+      const st = h("div", "status");
+      st.appendChild(h("b", null, "Статус"));
+      if (L.closed) st.appendChild(h("span", null, cap(L.closed.kind) + (L.closed.by ? " — " + L.closed.by : "") + "."));
+      L.per.forEach((p) => st.appendChild(h("span", null, TITLE[p.role] + ": " + (
+        p.state === "answered" ? "ответил письмом " + p.by :
+        p.state === "seen" ? "ответа нет, но писал позже (" + p.by + ") — считаю прочитанным" :
+        p.state === "later" ? "получит после рецензента" : "ещё не ответил и не писал после него"))));
+      if (!L.per.length && !L.closed) st.appendChild(h("span", null, "Адресат — не роль стола (" + L.toText + ")."));
+      st.appendChild(h("span", "small", "В INDEX: " + (L.manual || "строки нет") + (L.mismatch ? " — " + L.mismatch : "")));
+      b.appendChild(st);
+      const acts = h("div", "actions"), note = h("div", "copied");
+      const target = L.waitFor[0] || L.stages[0];
+      if (target && ROLES.includes(target)) {
+        const nums = A.pending[target] && A.pending[target].length ? A.pending[target].map((x) => x.num) : [L.num];
+        const go = h("button", "btn", "Отмашка " + DAT[target]); go.type = "button";
+        go.addEventListener("click", () => copy(goPhrase(target, nums), note, "Скопировано. Вставь в тред адресата."));
+        acts.appendChild(go);
+      }
+      const ask = h("button", "btn ghost", "Спросить собеседника"); ask.type = "button";
       ask.addEventListener("click", () => copy(askPhrase(L), note, "Вопрос скопирован. Вставь его в тред собеседника."));
-      acts.append(go, ask); b.append(acts, note);
+      acts.appendChild(ask); b.append(acts, note);
     });
   }
 
-  const listNums = (a) => a.length === 1 ? a[0] : a.slice(0, -1).join(", ") + " и " + a[a.length - 1];
-  function goPhrase(L) {
-    const nums = allLetters.filter((x) => x.to === L.to && x.status === "новое").map((x) => x.num);
-    if (!nums.length) nums.push(L.num);
-    return `${cap(L.to)}, на столе ${nums.length > 1 ? "письма" : "письмо"} ${listNums(nums)}, начни с ${nums.length > 1 ? "них" : "него"}.`;
-  }
-  function askPhrase(L) {
-    return `Собеседник, объясни письмо ${L.num} (${L.from} → ${L.to}: ${L.gist || L.lead}) и подскажи, что ответить.`;
-  }
-  function copy(text, note, ok) {
-    note.textContent = "";
-    const fallback = () => {
-      note.textContent = "Скопировать не вышло. Выдели текст и скопируй сам:";
-      const ta = h("textarea"); ta.id = "copy-fallback"; ta.rows = 3; ta.value = text; ta.readOnly = true;
-      note.appendChild(ta); ta.focus(); ta.select();
-    };
-    try {
-      navigator.clipboard.writeText(text).then(() => { note.textContent = ok; }, fallback);
-    } catch (e) { fallback(); }
-  }
-
-  let filter = { kind: "new" };
-  function renderFilters() {
-    const box = $("filters"); box.textContent = "";
-    const nNew = allLetters.filter((L) => L.status === "новое").length;
-    const mk = (label, f, color, n) => {
-      const b = h("button"); b.type = "button";
-      if (color) { b.style.setProperty("--pc", color); b.appendChild(h("span", "dot")); }
-      b.append(label); if (n) b.appendChild(h("span", "n", n));
-      const on = f.kind === filter.kind && f.who === filter.who;
-      b.setAttribute("aria-pressed", on ? "true" : "false");
-      b.addEventListener("click", () => { filter = f; renderFilters(); renderLetters(); });
-      box.appendChild(b);
-    };
-    mk("Новые", { kind: "new" }, null, nNew);
-    mk("Все", { kind: "all" }, null, 0);
-    ["наставник", "исполнитель", "рецензент", "собеседник"].forEach((w) => {
-      const n = allLetters.filter((L) => L.to === w && L.status === "новое").length;
-      mk(cap(DAT[w]), { kind: "to", who: w }, col(w), n);
-    });
-  }
-  function filterTo(who, scroll) {
-    filter = { kind: "to", who }; renderFilters(); renderLetters();
-    if (scroll) $("pisma").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
-  }
-  function renderLetters() {
-    const ul = $("letters"); ul.textContent = "";
-    let list = [...allLetters].reverse();
-    if (filter.kind === "new") list = list.filter((L) => L.status === "новое");
-    if (filter.kind === "to") list = list.filter((L) => L.to === filter.who);
-    list.sort((a, b) => (a.status === "новое" ? 0 : 1) - (b.status === "новое" ? 0 : 1));
-    if (!list.length) { ul.appendChild(h("li", "empty", filter.kind === "new" ? "Новых писем нет." : "Писем нет.")); return; }
-    list.forEach((L) => {
-      const li = h("li");
-      const btn = h("button", "letter" + (L.status === "новое" ? " new" : "")); btn.type = "button";
-      btn.style.setProperty("--from", col(L.from)); btn.style.setProperty("--to", col(L.to));
-      const route = h("span", "route"); route.append(pill(L.from), arrow(), pill(L.to));
-      btn.appendChild(route);
-      btn.appendChild(h("span", "num", "№ " + L.num));
-      btn.appendChild(h("span", "gist", cap(L.gist || L.lead)));
-      btn.setAttribute("aria-label", `Письмо ${L.num}, от: ${L.from}, кому: ${L.to}${L.status === "новое" ? ", новое" : ""}`);
-      btn.addEventListener("click", () => showLetter(L));
-      li.appendChild(btn); ul.appendChild(li);
-    });
-  }
-
-  // Летопись: строка «по-простому», а у ранних писем без неё — первая фраза сути
-  const firstSentence = (t) => { const m = (t || "").match(/^.+?[.!?](?=\s|$)/); return m ? m[0] : (t || ""); };
-  function renderChron() {
-    const ol = $("chron"); ol.textContent = "";
-    let day = null, anyFallback = false;
-    [...allLetters].reverse().forEach((L) => {
-      if (L.date !== day) { day = L.date; const d = h("li", "day", day.split("-").reverse().join(".")); ol.appendChild(d); }
-      const li = h("li", "entry");
-      li.style.setProperty("--from", col(L.from)); li.style.setProperty("--to", col(L.to));
-      li.appendChild(h("span", "rail"));
-      const b = h("button"); b.type = "button";
-      const meta = h("span", "meta"); meta.append(pill(L.from), arrow(), pill(L.to)); meta.appendChild(h("span", "no", "№ " + L.num));
-      const fb = !L.plain; anyFallback = anyFallback || fb;
-      b.append(meta, h("span", "say" + (fb ? " fallback" : ""), cap(L.plain || firstSentence(L.lead))));
-      b.addEventListener("click", () => showLetter(L));
-      li.appendChild(b); ol.appendChild(li);
-    });
-    if (anyFallback) ol.appendChild(h("li", "hint", "Серым — письма до правила «по-простому» (21.11, 20:10): вместо простой строки показана первая фраза сути."));
-  }
-
-  function showSeat(s, n) {
-    openSheet((b) => {
-      b.appendChild(h("div", "route", n ? `ждут писем: ${n}` : "писем не ждёт"));
-      b.appendChild(h("h3", null, s.title));
-      b.appendChild(h("p", "lead", cap(s.role) + "."));
-    });
-  }
-
-  function render(table, world) {
-    const ep = $("epigraph");
-    const q = h("q", null, world.epigraph.text); ep.appendChild(q);
-    ep.appendChild(h("span", "ru", world.epigraph.ru + " — " + world.epigraph.speaker));
-    ep.appendChild(h("small", null, world.epigraph.context + " " + world.epigraph.source));
-
-    const letters = table.letters;
-    allLetters = letters;
-    const waiting = {};
-    letters.forEach((L) => { if (L.status === "новое") waiting[L.to] = (waiting[L.to] || 0) + 1; });
-
-    drawShelves();
-    drawSeats(world, waiting);
-
-    // Чей ход
-    const turn = $("turn");
-    const order = Object.entries(waiting).sort((x, y) => y[1] - x[1]);
-    if (order.length) {
-      const p = h("div"); p.append("Сейчас ход: ");
-      order.forEach(([w, n], i) => { if (i) p.append(", "); p.appendChild(pill(w)); p.append("\u00a0(" + n + ")"); });
-      turn.appendChild(p);
-      turn.appendChild(h("div", "who", "В скобках — сколько новых писем ждёт его. Нажми на учёного — увидишь письма для него."));
-    } else {
-      turn.appendChild(h("div", null, "Все письма прочитаны. Стол ждёт нового хода."));
+  function renderWorld(world) {
+    const ep = $("epigraph"); ep.textContent = "";
+    if (world.epigraph) {
+      ep.appendChild(h("q", null, world.epigraph.text));
+      ep.appendChild(h("span", null, world.epigraph.ru + " — " + world.epigraph.speaker));
+      ep.appendChild(h("small", null, world.epigraph.context + " " + world.epigraph.source));
     }
-
-    renderFilters(); renderLetters(); renderChron();
-
-    // Лестница
-    const lad = $("ladder");
-    world.ladder.forEach((r) => {
+    const lad = $("ladder"); lad.textContent = "";
+    (world.ladder || []).forEach((r) => {
       const li = h("li", "rung " + r.state);
       li.appendChild(h("span", "mark", r.step));
-      const body = h("div", "body");
-      body.appendChild(h("span", "name", r.name));
-      body.appendChild(h("span", "plain", r.plain));
-      const when = (r.state === "done" ? "пройдена · " : r.state === "now" ? "сейчас · " : "впереди") + (r.when || "");
-      body.appendChild(h("span", "when", when.replace(/ · $/, "")));
+      const body = h("div");
+      body.appendChild(h("div", "name", r.name));
+      body.appendChild(h("div", "plain", r.plain));
+      body.appendChild(h("div", "when", ((r.state === "done" ? "пройдена · " : r.state === "now" ? "сейчас · " : "впереди · ") + (r.when || "")).replace(/ · $/, "")));
       li.appendChild(body); lad.appendChild(li);
     });
-    const ml = $("ml"); ml.appendChild(h("b", null, world.ml.name + ". ")); ml.append(world.ml.plain);
-
-    const card = (parent, cls, t, n, w) => { const c = h("div", "card " + cls); c.appendChild(h("span", "t", t)); c.appendChild(h("span", "n", n)); c.appendChild(h("span", "w", w)); parent.appendChild(c); };
-    world.finds.forEach((f) => card($("finds"), "find", f.title, f.note, f.where));
-    world.books.forEach((k) => card($("books"), "book", k.title, k.why, k.need));
-
-    $("footer").textContent = `Стол: ${letters.length} писем, последнее — № ${letters[letters.length - 1].num} от ${letters[letters.length - 1].date}. Страница сама читает папку table/ и ничего в ней не меняет.`;
-
-    // Запуск: новые письма прилетают по очереди, затем ложатся стопками
-    const fresh = letters.filter((L) => L.status === "новое");
-    drawStacks(letters.filter((L) => L.status !== "новое"));
-    (async () => { const shown = letters.filter((L) => L.status !== "новое"); for (const L of fresh) { await fly(L); shown.push(L); drawStacks(shown); } })();
+    if (world.ml) $("ml").textContent = world.ml.name + ". " + world.ml.plain;
+    const card = (parent, color, t, n, w) => { const c = h("div", "book"); c.style.setProperty("--pc", color); c.append(h("span", "t", t), h("span", "n", n), h("span", "w", w)); parent.appendChild(c); };
+    $("finds").textContent = ""; $("books").textContent = "";
+    (world.finds || []).forEach((f) => card($("finds"), "var(--accent)", f.title, f.note, f.where));
+    (world.books || []).forEach((k) => card($("books"), "var(--line)", k.title, k.why, k.need));
   }
 
+  function render(raw) {
+    A = analyse(raw.index, raw.files);
+    renderHero(); renderBoard(); renderTiles(); renderNotes(); renderSteps(); renderFilters(); renderLetters(); renderWorld(raw.world || {});
+    const L = A.letters[A.letters.length - 1];
+    $("footer").textContent = L ? `Стол: ${A.letters.length} писем, последнее — № ${L.num} от ${L.date}. Страница только читает папку table/ и ничего в ней не меняет.` : "Стол пуст.";
+  }
+
+  // ——— Вход ———
   function showDoor(msg) {
     $("main").hidden = true; $("door").hidden = false;
     $("door-err").hidden = !msg; $("door-err").textContent = msg || "";
   }
-  function start(raw, live) {
-    $("door").hidden = true; $("main").hidden = false; $("forget").hidden = !live;
-    render(parseTable(raw.index, raw.files), raw.world);
-  }
+  function start(raw, live) { $("door").hidden = true; $("main").hidden = false; $("forget").hidden = !live; $("reload").hidden = !live; render(raw); }
   async function enter(token) {
     try { start(await loadLive(token), true); }
     catch (e) {
-      if (e.status === 401) { store.clear(); showDoor("Ключ не подошёл или истёк. Создай новый и вставь сюда."); }
-      else if (e.status === 403 || e.status === 404) showDoor("Ключ принят, но стол не открылся (" + e.message + "). Проверь, что у ключа есть доступ к diffiety с правом Contents: read и что «Академия» уже влита в main.");
+      if (e.status === 401) { store.del(KEY); showDoor("Ключ не подошёл или истёк. Создай новый и вставь сюда."); }
+      else if (e.status === 403 || e.status === 404) showDoor("Ключ принят, но стол не открылся (" + e.message + "). Проверь, что у ключа есть доступ к diffiety с правом Contents: read.");
       else showDoor("Не удалось прочитать стол: " + e.message + ". Проверь интернет и обнови страницу.");
     }
   }
-  $("door").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const t = $("key").value.trim(); if (!t) return;
-    store.set(t); $("key").value = ""; enter(t);
-  });
-  $("forget").addEventListener("click", () => { store.clear(); location.reload(); });
+  $("door").addEventListener("submit", (e) => { e.preventDefault(); const t = $("key").value.trim(); if (!t) return; store.set(KEY, t); $("key").value = ""; enter(t); });
+  $("forget").addEventListener("click", () => { store.del(KEY); location.reload(); });
+  $("reload").addEventListener("click", () => { const t = store.get(KEY); if (t) enter(t); });
 
-  // Живой кабинет: горы в окне чуть сдвигаются при прокрутке, лампа включается касанием
-  const layers = [...document.querySelectorAll("#room .layer")];
-  let ticking = false;
-  window.addEventListener("scroll", () => {
-    if (ticking || reduce || calm()) return; ticking = true;
-    requestAnimationFrame(() => {
-      const y = Math.min(window.scrollY, 600);
-      layers.forEach((g) => g.setAttribute("transform", `translate(0 ${(y * parseFloat(g.dataset.depth) * 0.12).toFixed(1)})`));
-      ticking = false;
-    });
-  }, { passive: true });
-  const lamp = $("desklamp");
-  const toggleLamp = () => { $("room").classList.toggle("dark"); bounce(lamp); };
-  lamp.addEventListener("click", toggleLamp);
-  lamp.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleLamp(); } });
-  // Подсветка вкладки текущего раздела
-  const tabs = [...document.querySelectorAll(".tabs a")];
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver((es) => es.forEach((en) => {
-      if (en.isIntersecting) tabs.forEach((t) => t.classList.toggle("on", t.getAttribute("href") === "#" + en.target.id));
-    }), { rootMargin: "-45% 0px -50% 0px" });
-    ["stol", "pisma", "letopis", "lestnica", "polki"].forEach((id) => { const n = $(id); if (n) io.observe(n); });
-  }
-  const calmBtn = $("calm");
-  const syncCalm = () => { calmBtn.setAttribute("aria-pressed", calm() ? "true" : "false"); calmBtn.textContent = calm() ? "Оживить кабинет" : "Меньше движения"; };
-  calmBtn.addEventListener("click", () => {
-    document.documentElement.classList.toggle("calm");
-    try { localStorage.setItem(CALM, calm() ? "1" : "0"); } catch (e) {}
-    syncCalm();
-  });
-  syncCalm();
-
+  window.__academiaAnalyse = analyse; // для проверки
   if (window.ACADEMIA_RAW) start(window.ACADEMIA_RAW, false);
-  else if (store.get()) enter(store.get());
+  else if (store.get(KEY)) enter(store.get(KEY));
   else showDoor("");
 })();
 </script>
